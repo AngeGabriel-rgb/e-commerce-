@@ -26,7 +26,7 @@ export default async function CategoriesPage() {
             <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
               <div className="relative h-48 bg-muted">
                 <Image
-                  src={category.image || `/placeholder.svg?height=300&width=300&text=${category.name}`}
+                  src={category.image || `/images/produits/tel.png?height=300&width=300&text=${category.name}`}
                   alt={category.name}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"

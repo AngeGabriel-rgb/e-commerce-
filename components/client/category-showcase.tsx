@@ -27,7 +27,7 @@ export default function CategoryShowcase() {
             id: "smartphones",
             name: "Smartphones",
             description: "Téléphones intelligents de dernière génération",
-            image: "/placeholder.svg?height=300&width=300&text=Smartphones",
+            image: "/images/categories/?height=300&width=300&text=Smartphones",
             productCount: 12,
             createdAt: new Date("2023-01-01"),
             updatedAt: new Date("2023-01-01"),
