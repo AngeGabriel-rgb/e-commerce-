@@ -3,6 +3,7 @@ import SearchBar from "../../components/client/search-bar"
 import FeaturedProducts from "../../components/client/featured-products"
 import CategoryList from "../../components/client/category-list"
 import { getProducts } from "../../lib/services/product-service"
+import Image from "next/image"
 
 export default async function HomePage() {
   const products = await getProducts({ featured: true, limit: 4 })
@@ -19,19 +20,25 @@ export default async function HomePage() {
               Smartphones, ordinateurs, accessoires et bien plus encore à des prix compétitifs
             </p>
             <div>
-              <Button size="lg" className="mr-4">
-                Voir les produits
-              </Button>
-              <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
-                Promotions
-              </Button>
-            </div>
+  <Button size="lg" className="mr-4 bg-blue text-white hover:bg-blue-900 active: bg-blue-950">
+    Voir les produits
+  </Button>
+  <Button
+    size="lg"
+    className="mr-4 bg-blue text-white hover:bg-blue-900 active: bg-blue-950"
+  >
+    Promotions
+  </Button>
+</div>
           </div>
-          <img
-            src="/placeholder.svg?height=500&width=1200"
-            alt="Bannière produits électroniques"
-            className="w-full h-full object-cover"
-          />
+          <Image
+  src="/images/b.png" // Chemin de votre image
+  alt="Bannière produits électroniques"
+  fill
+  priority
+  sizes="100vw"
+  className="object-cover"
+/>
         </div>
       </section>
 
@@ -66,11 +73,14 @@ export default async function HomePage() {
                 <Button className="rounded-l-none">S'inscrire</Button>
               </div>
             </div>
-            <img
-              src="/placeholder.svg?height=200&width=300"
-              alt="Newsletter"
-              className="w-full max-w-[300px] h-auto rounded-lg"
-            />
+            <div className="relative w-full max-w-[300px] h-[200px]">
+              <Image
+                src="/images/newsletter.png"
+                alt="Newsletter"
+                fill
+                className="rounded-lg object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>

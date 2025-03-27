@@ -1,11 +1,11 @@
-import { getProductById, getRelatedProducts } from "../../../lib/services/product-service"
+import { getProductById, getRelatedProducts } from "@/lib/services/product-service"
 import { notFound } from "next/navigation"
 import Image from "next/image"
-import { Button } from "../../../components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../components/ui/tabs"
-import ProductReviews from "../../../components/client/product-reviews"
-import RelatedProducts from "../../../components/client/related-products"
-import AddToCartButton from "../../../components/client/add-to-cart-button"
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import ProductReviews from "@/components/client/product-reviews"
+import RelatedProducts from "@/components/client/related-products"
+import AddToCartButton from "@/components/client/add-to-cart-button"
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const product = await getProductById(params.id)

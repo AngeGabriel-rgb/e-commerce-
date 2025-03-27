@@ -3,9 +3,6 @@ import UserProfile from "../../../components/client/user-profile"
 import UserOrders from "../../../components/client/user-orders"
 import UserAddresses from "../../../components/client/user-addresses"
 import UserWishlist from "../../../components/client/user-wishlist"
-import { redirect } from "next/navigation"
-import { getServerSession } from "next-auth"
-import { authOptions } from "../../../lib/auth"
 
 export const metadata = {
   title: "Mon Compte - ElectroShop",
@@ -13,10 +10,12 @@ export const metadata = {
 }
 
 export default async function AccountPage() {
-  const session = await getServerSession(authOptions)
-
-  if (!session) {
-    redirect("/api/auth/signin")
+  // Utilisateur fictif sans authentification
+  const user = {
+    id: "user-1",
+    name: "Utilisateur Test",
+    email: "utilisateur@example.com",
+    image: null,
   }
 
   return (
@@ -31,16 +30,16 @@ export default async function AccountPage() {
           <TabsTrigger value="wishlist">Favoris</TabsTrigger>
         </TabsList>
         <TabsContent value="profile" className="p-4">
-          <UserProfile user={session.user} />
+          <UserProfile user={user} />
         </TabsContent>
         <TabsContent value="orders" className="p-4">
-          <UserOrders userId={session.user.id} />
+          <UserOrders userId={user.id} />
         </TabsContent>
         <TabsContent value="addresses" className="p-4">
-          <UserAddresses userId={session.user.id} />
+          <UserAddresses userId={user.id} />
         </TabsContent>
         <TabsContent value="wishlist" className="p-4">
-          <UserWishlist userId={session.user.id} />
+          <UserWishlist userId={user.id} />
         </TabsContent>
       </Tabs>
     </div>

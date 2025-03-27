@@ -10,17 +10,18 @@ export const metadata = {
   description: "Parcourez notre sélection de produits électroniques",
 }
 
-export default async function ProductsPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
-  const category = typeof searchParams.category === "string" ? searchParams.category : undefined
-  const sort = typeof searchParams.sort === "string" ? searchParams.sort : undefined
-  const search = typeof searchParams.search === "string" ? searchParams.search : undefined
+// Assurez-vous que la fonction est asynchrone
+async function ProductsPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+  // Attendre searchParams
+  const params = await searchParams;
 
-  const products = await getProducts({ category, sort, search })
+  const category = typeof params.category === "string" ? params.category : undefined;
+  const sort = typeof params.sort === "string" ? params.sort : undefined;
+  const search = typeof params.search === "string" ? params.search : undefined;
 
+  const products = await getProducts({ category, sort, search });
+
+  // Rendre vos produits ici
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Nos Produits</h1>
@@ -53,3 +54,4 @@ export default async function ProductsPage({
   )
 }
 
+export default ProductsPage;

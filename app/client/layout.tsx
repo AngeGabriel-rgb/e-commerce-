@@ -1,23 +1,21 @@
-"use client";
-
-import type React from "react";
-import Header from "../../components/client/header";
-import Footer from "../../components/client/footer";
-import { CartProvider } from "../../components/client/cart-provider";
-import { SessionProvider } from "next-auth/react";
+import type React from "react"
+import Header from "@/components/client/header"
+import Footer from "@/components/client/footer"
+import { CartProvider } from "@/components/client/cart-provider"
 
 export default function ClientLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <SessionProvider>
-      <CartProvider>
+    <CartProvider>
+      <div className="flex min-h-screen flex-col">
         <Header />
-        <main className="flex-grow">{children}</main>
+        <main className="flex-1">{children}</main>
         <Footer />
-      </CartProvider>
-    </SessionProvider>
-  );
+      </div>
+    </CartProvider>
+  )
 }
+

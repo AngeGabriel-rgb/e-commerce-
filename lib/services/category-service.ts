@@ -1,85 +1,98 @@
 import type { Category } from "../types"
 
-// Simulated database of categories
+// Données simulées pour les catégories
 const categories: Category[] = [
   {
     id: "smartphones",
     name: "Smartphones",
-    slug: "smartphones",
-    icon: "smartphone",
+    description: "Téléphones intelligents de dernière génération",
+    image: "/placeholder.svg?height=300&width=300&text=Smartphones",
+    productCount: 12,
+    createdAt: new Date("2023-01-01"),
+    updatedAt: new Date("2023-01-01"),
   },
   {
-    id: "ordinateurs",
-    name: "Ordinateurs",
-    slug: "ordinateurs",
-    icon: "laptop",
+    id: "laptops",
+    name: "Ordinateurs Portables",
+    description: "Ordinateurs portables pour tous les besoins",
+    image: "/placeholder.svg?height=300&width=300&text=Laptops",
+    productCount: 8,
+    createdAt: new Date("2023-01-01"),
+    updatedAt: new Date("2023-01-01"),
   },
   {
-    id: "tablettes",
+    id: "tablets",
     name: "Tablettes",
-    slug: "tablettes",
-    icon: "tablet",
+    description: "Tablettes tactiles pour le travail et les loisirs",
+    image: "/placeholder.svg?height=300&width=300&text=Tablettes",
+    productCount: 6,
+    createdAt: new Date("2023-01-01"),
+    updatedAt: new Date("2023-01-01"),
   },
   {
-    id: "accessoires",
+    id: "accessories",
     name: "Accessoires",
-    slug: "accessoires",
-    icon: "headphones",
+    description: "Accessoires pour vos appareils électroniques",
+    image: "/placeholder.svg?height=300&width=300&text=Accessoires",
+    productCount: 24,
+    createdAt: new Date("2023-01-01"),
+    updatedAt: new Date("2023-01-01"),
+  },
+  {
+    id: "audio",
+    name: "Audio",
+    description: "Écouteurs, casques et enceintes",
+    image: "/placeholder.svg?height=300&width=300&text=Audio",
+    productCount: 15,
+    createdAt: new Date("2023-01-01"),
+    updatedAt: new Date("2023-01-01"),
+  },
+  {
+    id: "tvs",
+    name: "Téléviseurs",
+    description: "Téléviseurs LED, OLED et Smart TV",
+    image: "/placeholder.svg?height=300&width=300&text=TVs",
+    productCount: 10,
+    createdAt: new Date("2023-01-01"),
+    updatedAt: new Date("2023-01-01"),
+  },
+  {
+    id: "gaming",
+    name: "Gaming",
+    description: "Consoles et accessoires de jeu",
+    image: "/placeholder.svg?height=300&width=300&text=Gaming",
+    productCount: 18,
+    createdAt: new Date("2023-01-01"),
+    updatedAt: new Date("2023-01-01"),
+  },
+  {
+    id: "smart-home",
+    name: "Maison Connectée",
+    description: "Appareils pour la maison intelligente",
+    image: "/placeholder.svg?height=300&width=300&text=Smart+Home",
+    productCount: 14,
+    createdAt: new Date("2023-01-01"),
+    updatedAt: new Date("2023-01-01"),
   },
 ]
 
 export async function getCategories(): Promise<Category[]> {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 300))
-
+  // Simuler un délai d'API
+  await new Promise((resolve) => setTimeout(resolve, 500))
   return categories
 }
 
 export async function getCategoryById(id: string): Promise<Category | null> {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 200))
-
+  // Simuler un délai d'API
+  await new Promise((resolve) => setTimeout(resolve, 300))
   const category = categories.find((c) => c.id === id)
   return category || null
 }
 
-export async function createCategory(categoryData: Omit<Category, "id">): Promise<Category> {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 500))
-
-  const newCategory: Category = {
-    id: categoryData.slug,
-    ...categoryData,
-  }
-
-  categories.push(newCategory)
-  return newCategory
-}
-
-export async function updateCategory(id: string, categoryData: Partial<Category>): Promise<Category | null> {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 500))
-
-  const index = categories.findIndex((c) => c.id === id)
-  if (index === -1) return null
-
-  const updatedCategory = {
-    ...categories[index],
-    ...categoryData,
-  }
-
-  categories[index] = updatedCategory
-  return updatedCategory
-}
-
-export async function deleteCategory(id: string): Promise<boolean> {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 500))
-
-  const index = categories.findIndex((c) => c.id === id)
-  if (index === -1) return false
-
-  categories.splice(index, 1)
-  return true
+export async function getProductCountByCategory(categoryId: string): Promise<number> {
+  // Simuler un délai d'API
+  await new Promise((resolve) => setTimeout(resolve, 200))
+  const category = await getCategoryById(categoryId)
+  return category ? category.productCount : 0
 }
 

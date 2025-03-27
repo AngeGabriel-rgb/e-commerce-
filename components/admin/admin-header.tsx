@@ -3,7 +3,7 @@
 import { Button } from "../ui/button"
 import { Bell, Search, Menu } from "lucide-react"
 import { Input } from "../ui/input"
-import { ThemeToggle } from "../../components/theme-toggle"
+import { ThemeToggle } from "../theme-toggle"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import {
   DropdownMenu,
@@ -13,7 +13,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
-import { signOut } from "next-auth/react"
 import Link from "next/link"
 
 interface AdminHeaderProps {
@@ -77,7 +76,9 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
               <Link href="/admin/parametres">Paramètres</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => signOut()}>Déconnexion</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/client">Retour à la boutique</Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

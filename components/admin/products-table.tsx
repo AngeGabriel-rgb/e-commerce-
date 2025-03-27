@@ -23,7 +23,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "../ui/alertDialog"
+} from "../ui/alert-dialog"
 import { toast } from "../ui/use-toast"
 import { MoreHorizontal, Pencil, Trash2, Eye } from "lucide-react"
 import type { Product } from "../../lib/types"

@@ -1,9 +1,14 @@
-// components/client/cart-provider.tsx
 "use client"
 
-import React, { createContext, useContext, useState, useEffect } from "react"
-import { toast } from "../ui/use-toast"
-import type { CartItem, Product } from "../../lib/types"
+import type React from "react"
+
+import { createContext, useContext, useState, useEffect } from "react"
+import type { Product } from "@/lib/types"
+
+interface CartItem {
+  product: Product
+  quantity: number
+}
 
 interface CartContextType {
   cartItems: CartItem[]
@@ -11,8 +16,7 @@ interface CartContextType {
   removeFromCart: (productId: string) => void
   updateQuantity: (productId: string, quantity: number) => void
   clearCart: () => void
-  getCartTotal: () => number
-  getCartCount: () => number
+  total: number
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -21,6 +25,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [isInitialized, setIsInitialized] = useState(false)
 
+  // Calculer le total du panier
+  const total = cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+
   // Charger le panier depuis le localStorage au chargement
   useEffect(() => {
     const storedCart = localStorage.getItem("cart")
@@ -28,7 +35,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       try {
         setCartItems(JSON.parse(storedCart))
       } catch (error) {
-        console.error("Error parsing cart from localStorage:", error)
+        console.error("Erreur lors du chargement du panier:", error)
+        localStorage.removeItem("cart")
       }
     }
     setIsInitialized(true)
@@ -41,81 +49,41 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [cartItems, isInitialized])
 
+  // Ajouter un produit au panier
   const addToCart = (product: Product, quantity: number) => {
     setCartItems((prevItems) => {
-      // Vérifier si le produit est déjà dans le panier
-      const existingItemIndex = prevItems.findIndex(
-        (item) => item.product.id === product.id
-      )
+      const existingItemIndex = prevItems.findIndex((item) => item.product.id === product.id)
 
       if (existingItemIndex !== -1) {
-        // Mettre à jour la quantité si le produit existe déjà
+        // Le produit existe déjà, mettre à jour la quantité
         const updatedItems = [...prevItems]
         updatedItems[existingItemIndex].quantity += quantity
-        
-        toast({
-          title: "Produit mis à jour",
-          description: `Quantité mise à jour dans votre panier`,
-        })
-        
         return updatedItems
       } else {
-        // Ajouter le nouveau produit au panier
-        toast({
-          title: "Produit ajouté",
-          description: `${product.name} a été ajouté à votre panier`,
-        })
-        
+        // Ajouter un nouveau produit
         return [...prevItems, { product, quantity }]
       }
     })
   }
 
+  // Supprimer un produit du panier
   const removeFromCart = (productId: string) => {
-    setCartItems((prevItems) => {
-      const updatedItems = prevItems.filter(
-        (item) => item.product.id !== productId
-      )
-      
-      toast({
-        title: "Produit retiré",
-        description: "Le produit a été retiré de votre panier",
-      })
-      
-      return updatedItems
-    })
+    setCartItems((prevItems) => prevItems.filter((item) => item.product.id !== productId))
   }
 
+  // Mettre à jour la quantité d'un produit
   const updateQuantity = (productId: string, quantity: number) => {
     if (quantity <= 0) {
       removeFromCart(productId)
       return
     }
 
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.product.id === productId ? { ...item, quantity } : item
-      )
-    )
+    setCartItems((prevItems) => prevItems.map((item) => (item.product.id === productId ? { ...item, quantity } : item)))
   }
 
+  // Vider le panier
   const clearCart = () => {
     setCartItems([])
-    toast({
-      title: "Panier vidé",
-      description: "Tous les produits ont été retirés de votre panier",
-    })
-  }
-
-  const getCartTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.product.price * item.quantity,
-      0
-    )
-  }
-
-  const getCartCount = () => {
-    return cartItems.reduce((count, item) => count + item.quantity, 0)
   }
 
   return (
@@ -126,8 +94,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         removeFromCart,
         updateQuantity,
         clearCart,
-        getCartTotal,
-        getCartCount,
+        total,
       }}
     >
       {children}
@@ -142,3 +109,4 @@ export function useCart() {
   }
   return context
 }
+

@@ -1,148 +1,159 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { ShoppingCart, User, Search, Menu, X } from "lucide-react"
-import { useState } from "react"
+import { usePathname } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { ShoppingCart, Heart, User, Search, Menu, X } from "lucide-react"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useCart } from "./cart-provider"
-import { Badge } from "../ui/badge"
-import { ThemeToggle } from "../theme-toggle"
-import { useSession, signIn, signOut } from "next-auth/react"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
+import MainNav from "./main-nav"
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
   const { cartItems } = useCart()
-  const cartItemCount = cartItems.length
-  const { data: session } = useSession()
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+  const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
-    <header className="border-b sticky top-0 bg-background z-50">
-      <div className="container mx-auto px-4 py-4">
+    <header
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        isScrolled ? "bg-white shadow-md py-2" : "bg-white/80 backdrop-blur-sm py-4"
+      }`}
+    >
+      <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <Link href="/client" className="text-2xl font-bold mr-8">
-              ElectroShop
-            </Link>
+          {/* Logo avec fonction de rafraîchissement */}
+          <button
+            onClick={() => {
+              window.location.href = "/client"
+            }}
+            className="flex items-center cursor-pointer"
+          >
+            <span className="text-xl font-bold">ElectroShop</span>
+          </button>
 
-            <nav className="hidden md:flex space-x-6">
-              <Link href="/client" className="hover:text-primary transition-colors">Accueil</Link>
-              <Link href="/client/produits" className="hover:text-primary transition-colors">Produits</Link>
-              <Link href="/client/promotions" className="hover:text-primary transition-colors">Promotions</Link>
-              <Link href="/client/contact" className="hover:text-primary transition-colors">Contact</Link>
-            </nav>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex">
+            <MainNav />
           </div>
 
-          <div className="hidden md:flex items-center space-x-4">
-            <div className="relative">
-              <Input type="search" placeholder="Rechercher..." className="w-64 pl-10" aria-label="Rechercher des produits"/>
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            </div>
+          {/* Search Bar - Desktop */}
+          <div className="hidden md:flex items-center relative flex-1 max-w-sm mx-6">
+            <Input type="search" placeholder="Rechercher un produit..." className="pl-10" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          </div>
 
-            <ThemeToggle />
+          {/* Actions */}
+          <div className="flex items-center space-x-4">
+            {/* Search - Mobile */}
+            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsSearchOpen(!isSearchOpen)}>
+              {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
+            </Button>
 
-            {session ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="relative" aria-label="Menu utilisateur">
-                    <User className="h-5 w-5" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>Mon compte</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link href="/client/compte">Profil</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/client/compte?tab=orders">Commandes</Link>
-                  </DropdownMenuItem>
-                  {session.user.role === "admin" && (
-                    <DropdownMenuItem asChild>
-                      <Link href="/admin">Administration</Link>
-                    </DropdownMenuItem>
-                  )}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => signOut()}>Déconnexion</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Button variant="ghost" size="icon" onClick={() => signIn()} aria-label="Connexion">
-                <User className="h-5 w-5" />
-              </Button>
-            )}
+            {/* Wishlist */}
+            <Button variant="ghost" size="icon" asChild>
+              <Link href="/client/compte/liste-souhaits">
+                <Heart className="h-5 w-5" />
+                <span className="sr-only">Liste de souhaits</span>
+              </Link>
+            </Button>
 
+            {/* Cart */}
             <Button variant="ghost" size="icon" asChild className="relative">
               <Link href="/client/panier">
                 <ShoppingCart className="h-5 w-5" />
-                {cartItemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0">
-                    {cartItemCount}
-                  </Badge>
+                {cartItemsCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartItemsCount}
+                  </span>
                 )}
-              </Link>
-            </Button>
-          </div>
-
-          <div className="md:hidden flex items-center">
-            <Button variant="ghost" size="icon" asChild className="relative mr-2">
-              <Link href="/client/panier">
-                <ShoppingCart className="h-5 w-5" />
-                {cartItemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0">
-                    {cartItemCount}
-                  </Badge>
-                )}
+                <span className="sr-only">Panier</span>
               </Link>
             </Button>
 
-            <Button variant="ghost" size="icon" onClick={toggleMenu} aria-label="Menu">
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {/* Account */}
+            <Button variant="ghost" size="icon" asChild>
+              <Link href="/client/compte">
+                <User className="h-5 w-5" />
+                <span className="sr-only">Compte</span>
+              </Link>
             </Button>
+
+            {/* Mobile Menu */}
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="md:hidden">
+                  <Menu className="h-5 w-5" />
+                  <span className="sr-only">Menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <nav className="flex flex-col gap-4 mt-8">
+                  <Link
+                    href="/client"
+                    className={`text-lg font-medium ${pathname === "/client" ? "text-primary" : ""}`}
+                  >
+                    Accueil
+                  </Link>
+                  <Link
+                    href="/client/produits"
+                    className={`text-lg font-medium ${pathname.startsWith("/client/produits") ? "text-primary" : ""}`}
+                  >
+                    Produits
+                  </Link>
+                  <Link
+                    href="/client/categories"
+                    className={`text-lg font-medium ${pathname.startsWith("/client/categories") ? "text-primary" : ""}`}
+                  >
+                    Catégories
+                  </Link>
+                  <Link
+                    href="/client/promotions"
+                    className={`text-lg font-medium ${pathname.startsWith("/client/promotions") ? "text-primary" : ""}`}
+                  >
+                    Promotions
+                  </Link>
+                  <Link
+                    href="/client/a-propos"
+                    className={`text-lg font-medium ${pathname.startsWith("/client/a-propos") ? "text-primary" : ""}`}
+                  >
+                    À propos
+                  </Link>
+                  <Link
+                    href="/client/contact"
+                    className={`text-lg font-medium ${pathname.startsWith("/client/contact") ? "text-primary" : ""}`}
+                  >
+                    Contact
+                  </Link>
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
+
+        {/* Mobile Search - Expanded */}
+        {isSearchOpen && (
+          <div className="md:hidden mt-4 relative">
+            <Input type="search" placeholder="Rechercher un produit..." className="pl-10 w-full" autoFocus />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          </div>
+        )}
       </div>
-
-      {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden py-4 px-4 border-t">
-          <div className="flex items-center mb-4">
-            <Input type="search" placeholder="Rechercher..." className="w-full pl-10" aria-label="Rechercher des produits"/>
-            <Search className="absolute left-7 h-4 w-4 text-muted-foreground" />
-          </div>
-
-          <nav className="flex flex-col space-y-4">
-            <Link href="/client" className="hover:text-primary transition-colors" onClick={toggleMenu}>Accueil</Link>
-            <Link href="/client/produits" className="hover:text-primary transition-colors" onClick={toggleMenu}>Produits</Link>
-            <Link href="/client/promotions" className="hover:text-primary transition-colors" onClick={toggleMenu}>Promotions</Link>
-            <Link href="/client/contact" className="hover:text-primary transition-colors" onClick={toggleMenu}>Contact</Link>
-            {session ? (
-              <>
-                <Link href="/client/compte" className="hover:text-primary transition-colors" onClick={toggleMenu}>Mon Compte</Link>
-                <Button variant="ghost" className="justify-start px-0" onClick={() => signOut()}>Déconnexion</Button>
-              </>
-            ) : (
-              <Button variant="ghost" className="justify-start px-0" onClick={() => signIn()}>Connexion</Button>
-            )}
-          </nav>
-
-          <div className="mt-4 flex justify-between">
-            <ThemeToggle />
-          </div>
-        </div>
-      )}
     </header>
   )
 }
+

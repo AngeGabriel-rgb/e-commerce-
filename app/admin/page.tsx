@@ -2,7 +2,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/ca
 import { getOrderStats, getRecentOrders } from "../../lib/services/order-service"
 import { getUserStats } from "../../lib/services/user-service"
 import { getProductStats } from "../../lib/services/product-service"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 import { DollarSign, Users, Package, ShoppingCart } from "lucide-react"
 import RecentOrdersTable from "../../components/admin/recent-orders-table"
 
@@ -26,6 +25,9 @@ export default async function AdminDashboardPage() {
     { name: "Juin", total: 4100 },
     { name: "Juil", total: 3800 },
   ]
+
+  // Calculer la valeur maximale pour l'échelle
+  const maxValue = Math.max(...salesData.map((item) => item.total))
 
   return (
     <div className="space-y-6">
@@ -83,15 +85,22 @@ export default async function AdminDashboardPage() {
             <CardTitle>Ventes mensuelles</CardTitle>
           </CardHeader>
           <CardContent className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={salesData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="total" fill="#3b82f6" />
-              </BarChart>
-            </ResponsiveContainer>
+            {/* Graphique simplifié sans recharts */}
+            <div className="flex h-64 items-end space-x-2">
+              {salesData.map((item, index) => (
+                <div key={index} className="flex flex-col items-center">
+                  <div
+                    className="w-12 bg-blue-500 rounded-t-md"
+                    style={{
+                      height: `${(item.total / maxValue) * 100}%`,
+                      minHeight: "8px",
+                    }}
+                  ></div>
+                  <span className="text-xs mt-2">{item.name}</span>
+                  <span className="text-xs text-muted-foreground">{item.total}€</span>
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
 

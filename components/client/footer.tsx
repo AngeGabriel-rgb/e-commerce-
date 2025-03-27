@@ -1,61 +1,71 @@
-// components/client/footer.tsx
 import Link from "next/link"
-import { Facebook, Instagram, Twitter } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Facebook, Twitter, Instagram, Youtube } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="bg-background border-t py-8">
-      <div className="container mx-auto px-4">
+    <footer className="bg-gray-100 border-t">
+      <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-bold text-lg mb-4">ElectroShop</h3>
+            <h3 className="text-lg font-bold mb-4">ElectroShop</h3>
             <p className="text-muted-foreground mb-4">
-              Votre boutique d'électronique en ligne avec les meilleurs prix et une livraison rapide.
+              Votre destination pour tous vos besoins en électronique. Qualité, service et prix compétitifs.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                <Facebook size={20} />
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Facebook className="h-5 w-5" />
                 <span className="sr-only">Facebook</span>
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                <Twitter size={20} />
+              </Button>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Twitter className="h-5 w-5" />
                 <span className="sr-only">Twitter</span>
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                <Instagram size={20} />
+              </Button>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
-              </Link>
+              </Button>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Youtube className="h-5 w-5" />
+                <span className="sr-only">YouTube</span>
+              </Button>
             </div>
           </div>
-          
+
           <div>
-            <h3 className="font-bold text-lg mb-4">Catégories</h3>
+            <h3 className="text-lg font-bold mb-4">Liens rapides</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/client/produits?category=smartphones" className="text-muted-foreground hover:text-primary">
-                  Smartphones
+                <Link href="/client" className="text-muted-foreground hover:text-primary">
+                  Accueil
                 </Link>
               </li>
               <li>
-                <Link href="/client/produits?category=ordinateurs" className="text-muted-foreground hover:text-primary">
-                  Ordinateurs
+                <Link href="/client/produits" className="text-muted-foreground hover:text-primary">
+                  Produits
                 </Link>
               </li>
               <li>
-                <Link href="/client/produits?category=tablettes" className="text-muted-foreground hover:text-primary">
-                  Tablettes
+                <Link href="/client/categories" className="text-muted-foreground hover:text-primary">
+                  Catégories
                 </Link>
               </li>
               <li>
-                <Link href="/client/produits?category=accessoires" className="text-muted-foreground hover:text-primary">
-                  Accessoires
+                <Link href="/client/promotions" className="text-muted-foreground hover:text-primary">
+                  Promotions
+                </Link>
+              </li>
+              <li>
+                <Link href="/client/contact" className="text-muted-foreground hover:text-primary">
+                  Contact
                 </Link>
               </li>
             </ul>
           </div>
-          
+
           <div>
-            <h3 className="font-bold text-lg mb-4">Informations</h3>
+            <h3 className="text-lg font-bold mb-4">Informations</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/client/a-propos" className="text-muted-foreground hover:text-primary">
@@ -68,33 +78,40 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/client/conditions" className="text-muted-foreground hover:text-primary">
-                  Conditions générales
-                </Link>
-              </li>
-              <li>
                 <Link href="/client/confidentialite" className="text-muted-foreground hover:text-primary">
                   Politique de confidentialité
                 </Link>
               </li>
+              <li>
+                <Link href="/client/conditions" className="text-muted-foreground hover:text-primary">
+                  Conditions d'utilisation
+                </Link>
+              </li>
+              <li>
+                <Link href="/client/retours" className="text-muted-foreground hover:text-primary">
+                  Politique de retour
+                </Link>
+              </li>
             </ul>
           </div>
-          
+
           <div>
-            <h3 className="font-bold text-lg mb-4">Contact</h3>
-            <address className="not-italic text-muted-foreground">
-              <p>123 Rue du Commerce</p>
-              <p>75001 Paris, France</p>
-              <p className="mt-2">Email: contact@electroshop.fr</p>
-              <p>Tél: 01 23 45 67 89</p>
-            </address>
+            <h3 className="text-lg font-bold mb-4">Newsletter</h3>
+            <p className="text-muted-foreground mb-4">
+              Inscrivez-vous pour recevoir nos dernières offres et nouveautés.
+            </p>
+            <div className="flex flex-col space-y-2">
+              <Input type="email" placeholder="Votre email" />
+              <Button>S'abonner</Button>
+            </div>
           </div>
         </div>
-        
-        <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
+
+        <div className="border-t mt-12 pt-8 text-center text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} ElectroShop. Tous droits réservés.</p>
         </div>
       </div>
     </footer>
   )
 }
+
