@@ -1,7 +1,7 @@
 import Link from "next/link"
-import Image from "next/image"
-import { getCategories } from "@/lib/services/category-service"
-import { Card, CardContent } from "@/components/ui/card"
+import { getCategories } from "../../../lib/services/category-service"
+import { Card, CardContent } from "../../../components/ui/card"
+import FallbackImage from "../../../components/client/fallback-image"
 
 export const metadata = {
   title: "Catégories - ElectroShop",
@@ -22,15 +22,16 @@ export default async function CategoriesPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {categories.map((category) => (
-          <Link key={category.id} href={`/client/produits?category=${category.id}`}>
+          <Link key={category.id} href={`/client/categories/${category.id}`}>
             <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
               <div className="relative h-48 bg-muted">
-                <Image
-                  src={category.image || `/images/produits/tel.png?height=300&width=300&text=${category.name}`}
+                <FallbackImage
+                  src={category.image || `/images/categories/${category.id}.jpg`}
                   alt={category.name}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                   className="object-cover"
+                  fallbackSrc={`/placeholder.svg?height=300&width=300&text=${encodeURIComponent(category.name)}`}
                 />
               </div>
               <CardContent className="p-4 text-center">
@@ -56,8 +57,8 @@ export default async function CategoriesPage() {
               Contactez-nous
             </Link>
           </div>
-          <Image
-            src="/placeholder.svg?height=200&width=300&text=Assistance"
+          <FallbackImage
+            src="/images/ass.png?height=200&width=300&text=Assistance"
             alt="Assistance"
             width={300}
             height={200}

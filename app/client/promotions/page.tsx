@@ -96,7 +96,7 @@ export default async function PromotionsPage() {
             </div>
           </div>
           <img
-            src="/placeholder.svg?height=200&width=300"
+            src="/images/new.png?height=200&width=300"
             alt="Newsletter"
             className="w-full max-w-[300px] h-auto rounded-lg"
           />

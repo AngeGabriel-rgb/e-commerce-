@@ -1,14 +1,17 @@
 import { Button } from "../../components/ui/button"
-import SearchBar from "../../components/client/search-bar"
-import FeaturedProducts from "../../components/client/featured-products"
-import CategoryList from "../../components/client/category-list"
 import HeroCarousel from "../../components/client/hero-carousel"
+import ProductSlider from "../../components/client/product-slider"
+import CategorySlider from "../../components/client/category-slider"
 import { getProducts } from "../../lib/services/product-service"
+import { getCategories } from "../../lib/services/category-service"
 import Image from "next/image"
 import Link from "next/link"
 
 export default async function HomePage() {
-  const products = await getProducts({ featured: true, limit: 4 })
+  const featuredProducts = await getProducts({ featured: true, limit: 8 })
+  const newProducts = await getProducts({ sort: "newest", limit: 8 })
+  const discountedProducts = await getProducts({ discount: true, limit: 8 })
+  const categories = await getCategories()
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -16,22 +19,26 @@ export default async function HomePage() {
         <HeroCarousel />
       </section>
 
-      <section className="mb-12">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold">Catégories populaires</h2>
-          <SearchBar />
-        </div>
-        <CategoryList />
-      </section>
-
-      <section className="mb-12">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold">Produits en vedette</h2>
+      <section className="mb-16">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold">Parcourir par catégorie</h2>
           <Button variant="outline" asChild>
-            <Link href="/client/produits">Voir tout</Link>
+            <Link href="/client/categories">Voir toutes les catégories</Link>
           </Button>
         </div>
-        <FeaturedProducts products={products} />
+        <CategorySlider title="" categories={categories} />
+      </section>
+
+      <section className="mb-16">
+        <ProductSlider title="Produits en vedette" products={featuredProducts} />
+      </section>
+
+      <section className="mb-16">
+        <ProductSlider title="Nouveautés" products={newProducts} />
+      </section>
+
+      <section className="mb-16">
+        <ProductSlider title="Promotions" products={discountedProducts} />
       </section>
 
       <section className="mb-12">

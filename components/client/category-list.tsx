@@ -45,9 +45,9 @@ const categories = [
     id: "televiseurs",
     name: "Téléviseurs",
     icon: Tv,
-    image: "/images/categories/tvs.png",
-    productCount: 10,
-  },
+    image: "/images/tvs.png",
+    productCount: 
+
   {
     id: "gaming",
     name: "Gaming",
@@ -64,16 +64,15 @@ const categories = [
   },
 ]
 
-
 export default function CategoryList() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {categories.map((category) => (
-        <Link key={category.id} href={`/client/produits?category=${category.id}`}>
+        <Link key={category.id} href={`/client/categories/${category.id}`}>
           <Card className="overflow-hidden transition-transform hover:scale-105 duration-300">
             <div className="relative h-40">
               <Image
-                src={category.image || "/placeholder.svg?height=200&width=300"}
+                src={category.image || `/images/categories/${category.id}.jpg`}
                 alt={category.name}
                 fill
                 sizes="(max-width: 768px) 50vw, 25vw"

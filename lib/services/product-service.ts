@@ -187,18 +187,16 @@ interface ProductFilters {
   limit?: number
 }
 
+// Fetch products with filters applied
 export async function getProducts(filters: ProductFilters = {}): Promise<Product[]> {
-  // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 500))
 
   let filteredProducts = [...products]
 
-  // Apply category filter
   if (filters.category) {
     filteredProducts = filteredProducts.filter((product) => product.category === filters.category)
   }
 
-  // Apply search filter
   if (filters.search) {
     const searchLower = filters.search.toLowerCase()
     filteredProducts = filteredProducts.filter(
@@ -209,12 +207,10 @@ export async function getProducts(filters: ProductFilters = {}): Promise<Product
     )
   }
 
-  // Apply featured filter
   if (filters.featured) {
     filteredProducts = filteredProducts.filter((product) => product.discount > 0 || product.rating >= 4.5)
   }
 
-  // Apply sorting
   if (filters.sort) {
     switch (filters.sort) {
       case "price-asc":
@@ -227,7 +223,6 @@ export async function getProducts(filters: ProductFilters = {}): Promise<Product
         filteredProducts.sort((a, b) => b.rating - a.rating)
         break
       case "newest":
-        // In a real app, you would sort by date
         filteredProducts.sort((a, b) => Number.parseInt(b.id) - Number.parseInt(a.id))
         break
       default:
@@ -235,7 +230,6 @@ export async function getProducts(filters: ProductFilters = {}): Promise<Product
     }
   }
 
-  // Apply limit
   if (filters.limit && filteredProducts.length > filters.limit) {
     filteredProducts = filteredProducts.slice(0, filters.limit)
   }
@@ -243,23 +237,23 @@ export async function getProducts(filters: ProductFilters = {}): Promise<Product
   return filteredProducts
 }
 
+// Fetch product by ID
 export async function getProductById(id: string): Promise<Product | null> {
-  // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 300))
 
   const product = products.find((p) => p.id === id)
   return product || null
 }
 
+// Fetch related products based on category
 export async function getRelatedProducts(productId: string, category: string): Promise<Product[]> {
-  // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 300))
 
   return products.filter((p) => p.id !== productId && p.category === category).slice(0, 4)
 }
 
+// Create a new product
 export async function createProduct(productData: Omit<Product, "id" | "rating" | "reviewCount">): Promise<Product> {
-  // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 500))
 
   const newProduct: Product = {
@@ -275,8 +269,8 @@ export async function createProduct(productData: Omit<Product, "id" | "rating" |
   return newProduct
 }
 
+// Update an existing product
 export async function updateProduct(id: string, productData: Partial<Product>): Promise<Product | null> {
-  // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 500))
 
   const index = products.findIndex((p) => p.id === id)
@@ -292,8 +286,8 @@ export async function updateProduct(id: string, productData: Partial<Product>): 
   return updatedProduct
 }
 
+// Delete a product
 export async function deleteProduct(id: string): Promise<boolean> {
-  // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 500))
 
   const index = products.findIndex((p) => p.id === id)
@@ -303,13 +297,13 @@ export async function deleteProduct(id: string): Promise<boolean> {
   return true
 }
 
+// Get product statistics
 export async function getProductStats(): Promise<{
   totalProducts: number
   outOfStock: number
   lowStock: number
   totalValue: number
 }> {
-  // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 300))
 
   const totalProducts = products.length
@@ -324,4 +318,3 @@ export async function getProductStats(): Promise<{
     totalValue,
   }
 }
-
