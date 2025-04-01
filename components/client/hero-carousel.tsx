@@ -26,14 +26,14 @@ const slides: Slide[] = [
     secondaryButtonLink: "/client/promotions",
   },
   {
-    image: "/images/b2.png?height=600&width=1200",
+    image: "/images/bb2.png?height=600&width=1200",
     title: "Nouveaux smartphones à prix réduits",
     description: "Profitez de nos offres exclusives sur les derniers modèles de smartphones",
     buttonText: "Découvrir",
     buttonLink: "/client/produits?category=smartphones",
   },
   {
-    image: "/images/b3.png?height=600&width=1200",
+    image: "/images/bb3.png?height=600&width=1200",
     title: "Accessoires high-tech",
     description: "Complétez votre équipement avec notre sélection d'accessoires de qualité",
     buttonText: "Voir les accessoires",
@@ -58,7 +58,7 @@ export default function HeroCarousel() {
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide()
-    }, 5000) // Change de diapositive toutes les 5 secondes
+    }, 6000) // Change de diapositive toutes les 5 secondes
 
     return () => clearInterval(interval)
   }, [])
@@ -90,7 +90,7 @@ export default function HeroCarousel() {
             <Link href={slide.buttonLink}>{slide.buttonText}</Link>
           </Button>
           {slide.secondaryButtonText && (
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10" asChild>
+            <Button size="lg" variant="outline" className="text-blue border-blue hover:bg-white/10" asChild>
               <Link href={slide.secondaryButtonLink || "#"}>{slide.secondaryButtonText}</Link>
             </Button>
           )}

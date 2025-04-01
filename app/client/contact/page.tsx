@@ -57,8 +57,8 @@ export default function ContactPage() {
           </CardHeader>
           <CardContent>
             <p className="mb-2">Siège social :</p>
-            <p className="font-medium">123 Avenue de la République</p>
-            <p className="font-medium">75011 Paris, France</p>
+            <p className="font-medium">ancienne sobraga</p>
+            <p className="font-medium">gabon/libreville</p>
           </CardContent>
         </Card>
       </div>
@@ -113,7 +113,7 @@ export default function ContactPage() {
               {/* Ici, vous pouvez intégrer une carte Google Maps ou une autre carte */}
               <div className="text-center p-4">
                 <MapPin className="h-8 w-8 mx-auto mb-2 text-primary" />
-                <p>123 Avenue de la République, 75011 Paris, France</p>
+                <p>ancienne sobraga / libreville</p>
                 <Button variant="link" className="mt-2">
                   Voir sur Google Maps
                 </Button>

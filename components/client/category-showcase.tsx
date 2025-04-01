@@ -45,7 +45,7 @@ export default function CategoryShowcase() {
             id: "accessories",
             name: "Accessoires",
             description: "Accessoires pour vos appareils électroniques",
-            image: "/images/categories/accessories.png?height=300&width=300&text=Accessoires",
+            image: "/images/categories/acces.png?height=300&width=300&text=Accessoires",
             productCount: 24,
             createdAt: new Date("2023-01-01"),
             updatedAt: new Date("2023-01-01"),

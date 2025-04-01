@@ -16,7 +16,7 @@ export default function AboutPage() {
 
         <div className="relative h-[300px] mb-8 rounded-lg overflow-hidden">
           <Image
-            src="/images/histoire.png?height=500&width=1200&text=Notre+Histoire"
+            src="/images/equipe.png?height=500&width=1200&text=Notre+Histoire"
             alt="Notre histoire"
             fill
             className="object-cover"
@@ -74,19 +74,19 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {[
                 {
-                  name: "Jean Dupont",
+                  name: "Jean ",
                   role: "Fondateur & CEO",
-                  image: "/placeholder.svg?height=300&width=300&text=JD",
+                  image: "/images/ceo.png?height=300&width=300&text=JD",
                 },
                 {
-                  name: "Marie Martin",
+                  name: "Marie ",
                   role: "Directrice Marketing",
-                  image: "/placeholder.svg?height=300&width=300&text=MM",
+                  image: "/images/directrice.png?height=300&width=300&text=MM",
                 },
                 {
-                  name: "Thomas Bernard",
+                  name: "Thomas ",
                   role: "Responsable Technique",
-                  image: "/placeholder.svg?height=300&width=300&text=TB",
+                  image: "/images/tec.png?height=300&width=300&text=TB",
                 },
               ].map((member, index) => (
                 <div key={index} className="text-center">

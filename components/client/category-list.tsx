@@ -46,8 +46,8 @@ const categories = [
     name: "Téléviseurs",
     icon: Tv,
     image: "/images/tvs.png",
-    productCount: 
-
+    productCount: 10,
+  },
   {
     id: "gaming",
     name: "Gaming",
@@ -81,7 +81,7 @@ export default function CategoryList() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
                 <div className="flex flex-col text-white">
                   <div className="flex items-center">
-                    <category.icon className="h-5 w-5 mr-2" />
+                    <category.icon className="h-5 w-5 mr-2" aria-hidden="true" />
                     <h3 className="font-medium">{category.name}</h3>
                   </div>
                   <span className="text-sm text-white/80">{category.productCount} produits</span>
