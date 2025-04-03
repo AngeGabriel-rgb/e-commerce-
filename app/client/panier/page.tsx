@@ -1,6 +1,6 @@
-import { Button } from "../../../components/ui/button"
-import CartItems from "../../../components/client/cart-items"
-import CartSummary from "../../../components/client/cart-summary"
+import { Button } from "@/components/ui/button"
+import CartItems from "@/components/client/cart-items"
+import CartSummary from "@/components/client/cart-summary"
 import Link from "next/link"
 
 export const metadata = {
@@ -22,8 +22,8 @@ export default function CartPage() {
           <CartSummary />
 
           <div className="mt-6 flex flex-col space-y-4">
-            <Button size="lg" className="w-full">
-              Procéder au paiement
+            <Button size="lg" className="w-full" asChild>
+              <Link href="/client/paiement">Procéder au paiement</Link>
             </Button>
             <Button variant="outline" size="lg" className="w-full" asChild>
               <Link href="/client/produits">Continuer vos achats</Link>

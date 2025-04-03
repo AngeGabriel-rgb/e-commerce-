@@ -1,156 +1,108 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useState } from "react"
 import { usePathname } from "next/navigation"
+import { ShoppingCart, Menu, X, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ShoppingCart, Heart, User, Search, Menu, X } from "lucide-react"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { useCart } from "./cart-provider"
-import MainNav from "./main-nav"
+import { useCart } from "@/hooks/use-cart"
+import { useMobile } from "@/hooks/use-mobile"
 
-export default function Header() {
+export function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
-  const { cartItems } = useCart()
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const { itemCount } = useCart()
+  const isMobile = useMobile()
 
-  const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0)
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+  }
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  const navItems = [
+    { name: "Accueil", href: "/client" },
+    { name: "Produits", href: "/client/produits" },
+    { name: "Promotions", href: "/client/promotions" },
+    { name: "Contact", href: "/client/contact" },
+  ]
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-md py-2" : "bg-white/80 backdrop-blur-sm py-4"
-      }`}
-    >
-      <div className="container mx-auto px-4">
+    <header className="bg-white shadow-sm">
+      <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo avec fonction de rafraîchissement */}
-          <button
-            onClick={() => {
-              window.location.href = "/client"
-            }}
-            className="flex items-center cursor-pointer"
-          >
-            <span className="text-xl font-bold">ElectroShop</span>
-          </button>
+          {/* Logo */}
+          <Link href="/client" className="text-2xl font-bold text-gray-900">
+            ElectroShop
+          </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex">
-            <MainNav />
-          </div>
-
-          {/* Search Bar - Desktop */}
-          <div className="hidden md:flex items-center relative flex-1 max-w-sm mx-6">
-            <Input type="search" placeholder="Rechercher un produit..." className="pl-10" />
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          </div>
+          {/* Navigation desktop */}
+          {!isMobile && (
+            <nav className="hidden md:flex space-x-8">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`text-sm font-medium ${
+                    pathname === item.href
+                      ? "text-gray-900 border-b-2 border-gray-900"
+                      : "text-gray-500 hover:text-gray-900"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+          )}
 
           {/* Actions */}
           <div className="flex items-center space-x-4">
-            {/* Search - Mobile */}
-            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsSearchOpen(!isSearchOpen)}>
-              {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
-            </Button>
-
-            {/* Wishlist */}
-            <Button variant="ghost" size="icon" asChild>
-              <Link href="/client/compte/liste-souhaits">
-                <Heart className="h-5 w-5" />
-                <span className="sr-only">Liste de souhaits</span>
-              </Link>
-            </Button>
-
-            {/* Cart */}
-            <Button variant="ghost" size="icon" asChild className="relative">
-              <Link href="/client/panier">
+            <Link href="/client/compte">
+              <Button variant="ghost" size="icon" aria-label="Mon compte">
+                <User className="h-5 w-5" />
+              </Button>
+            </Link>
+            <Link href="/client/panier">
+              <Button variant="ghost" size="icon" aria-label="Panier" className="relative">
                 <ShoppingCart className="h-5 w-5" />
-                {cartItemsCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {cartItemsCount}
+                {itemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {itemCount}
                   </span>
                 )}
-                <span className="sr-only">Panier</span>
-              </Link>
-            </Button>
-
-            {/* Account */}
-            <Button variant="ghost" size="icon" asChild>
-              <Link href="/client/compte">
-                <User className="h-5 w-5" />
-                <span className="sr-only">Compte</span>
-              </Link>
-            </Button>
-
-            {/* Mobile Menu */}
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
-                  <Menu className="h-5 w-5" />
-                  <span className="sr-only">Menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-                <nav className="flex flex-col gap-4 mt-8">
-                  <Link
-                    href="/client"
-                    className={`text-lg font-medium ${pathname === "/client" ? "text-primary" : ""}`}
-                  >
-                    Accueil
-                  </Link>
-                  <Link
-                    href="/client/produits"
-                    className={`text-lg font-medium ${pathname.startsWith("/client/produits") ? "text-primary" : ""}`}
-                  >
-                    Produits
-                  </Link>
-                  <Link
-                    href="/client/categories"
-                    className={`text-lg font-medium ${pathname.startsWith("/client/categories") ? "text-primary" : ""}`}
-                  >
-                    Catégories
-                  </Link>
-                  <Link
-                    href="/client/promotions"
-                    className={`text-lg font-medium ${pathname.startsWith("/client/promotions") ? "text-primary" : ""}`}
-                  >
-                    Promotions
-                  </Link>
-                  <Link
-                    href="/client/a-propos"
-                    className={`text-lg font-medium ${pathname.startsWith("/client/a-propos") ? "text-primary" : ""}`}
-                  >
-                    À propos
-                  </Link>
-                  <Link
-                    href="/client/contact"
-                    className={`text-lg font-medium ${pathname.startsWith("/client/contact") ? "text-primary" : ""}`}
-                  >
-                    Contact
-                  </Link>
-                </nav>
-              </SheetContent>
-            </Sheet>
+              </Button>
+            </Link>
+            {isMobile && (
+              <Button variant="ghost" size="icon" onClick={toggleMenu} aria-label="Menu">
+                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </Button>
+            )}
           </div>
         </div>
 
-        {/* Mobile Search - Expanded */}
-        {isSearchOpen && (
-          <div className="md:hidden mt-4 relative">
-            <Input type="search" placeholder="Rechercher un produit..." className="pl-10 w-full" autoFocus />
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          </div>
+        {/* Menu mobile */}
+        {isMobile && isMenuOpen && (
+          <nav className="mt-4 py-2 border-t">
+            <ul className="space-y-2">
+              {navItems.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className={`block py-2 px-4 rounded-md ${
+                      pathname === item.href
+                        ? "bg-gray-100 text-gray-900 font-medium"
+                        : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                    }`}
+                    onClick={closeMenu}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         )}
       </div>
     </header>

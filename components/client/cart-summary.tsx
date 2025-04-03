@@ -1,98 +1,85 @@
-// components/client/cart-summary.tsx
 "use client"
 
 import { useState } from "react"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { formatPrice } from "@/lib/utils"
 import { useCart } from "./cart-provider"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { Input } from "../ui/input"
-import { Button } from "../ui/button"
 import { Separator } from "../ui/separator"
-import { formatPrice } from "../../lib/utils"
 
 export default function CartSummary() {
-  const { cartItems } = useCart()
+  const { cartTotal } = useCart()
   const [promoCode, setPromoCode] = useState("")
-  const [promoApplied, setPromoApplied] = useState(false)
-  const [promoError, setPromoError] = useState("")
+  const [isApplying, setIsApplying] = useState(false)
 
-  // Calculer le sous-total
-  const subtotal = cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0)
-  
-  // Frais de livraison fixes
-  const shipping = cartItems.length > 0 ? 5.99 : 0
-  
-  // Remise (simulée)
-  const discount = promoApplied ? subtotal * 0.1 : 0
-  
-  // Total
-  const total = subtotal + shipping - discount
+  // Calculer les frais de livraison (gratuit au-dessus de 50€)
+  const shippingCost = cartTotal > 50 ? 0 : 5.99
+  const tax = cartTotal * 0.2 // TVA à 20%
+  const total = cartTotal + shippingCost + tax
 
   const handleApplyPromo = () => {
-    if (!promoCode) {
-      setPromoError("Veuillez entrer un code promo")
-      return
-    }
+    if (!promoCode) return
 
-    // Simuler la vérification d'un code promo
-    if (promoCode.toUpperCase() === "WELCOME10") {
-      setPromoApplied(true)
-      setPromoError("")
-    } else {
-      setPromoError("Code promo invalide")
-      setPromoApplied(false)
-    }
+    setIsApplying(true)
+    // Simuler un délai de traitement
+    setTimeout(() => {
+      // Ici, vous pourriez implémenter une vérification réelle du code promo
+      setIsApplying(false)
+      alert("Code promo non valide ou expiré")
+    }, 1000)
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Récapitulatif</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <div className="border rounded-lg overflow-hidden">
+      <div className="bg-muted/50 px-4 py-3 border-b">
+        <h2 className="font-medium">Récapitulatif</h2>
+      </div>
+
+      <div className="p-4">
         <div className="space-y-2">
           <div className="flex justify-between">
-            <span>Sous-total</span>
-            <span>{formatPrice(subtotal)}</span>
+            <span className="text-muted-foreground">Sous-total</span>
+            <span>{formatPrice(cartTotal)}</span>
           </div>
+
           <div className="flex justify-between">
-            <span>Livraison</span>
-            <span>{shipping > 0 ? formatPrice(shipping) : "Gratuit"}</span>
+            <span className="text-muted-foreground">Livraison</span>
+            <span>{shippingCost === 0 ? "Gratuite" : formatPrice(shippingCost)}</span>
           </div>
-          {promoApplied && (
-            <div className="flex justify-between text-green-600">
-              <span>Remise (10%)</span>
-              <span>-{formatPrice(discount)}</span>
-            </div>
-          )}
-          <Separator />
-          <div className="flex justify-between font-medium">
+
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">TVA (20%)</span>
+            <span>{formatPrice(tax)}</span>
+          </div>
+
+          <Separator className="my-2" />
+
+          <div className="flex justify-between font-semibold text-lg">
             <span>Total</span>
             <span>{formatPrice(total)}</span>
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="mt-4">
+          <p className="text-sm text-muted-foreground mb-2">Vous avez un code promo ?</p>
           <div className="flex gap-2">
             <Input
               placeholder="Code promo"
               value={promoCode}
               onChange={(e) => setPromoCode(e.target.value)}
+              className="flex-1"
             />
-            <Button onClick={handleApplyPromo} variant="outline">
-              Appliquer
+            <Button variant="outline" onClick={handleApplyPromo} disabled={isApplying || !promoCode}>
+              {isApplying ? "..." : "Appliquer"}
             </Button>
           </div>
-          {promoError && <p className="text-sm text-destructive">{promoError}</p>}
-          {promoApplied && (
-            <p className="text-sm text-green-600">Code promo appliqué avec succès !</p>
-          )}
         </div>
-      </CardContent>
-      <CardFooter className="border-t pt-4">
-        <p className="text-xs text-muted-foreground">
+
+        <p className="text-xs text-muted-foreground mt-4">
           Les taxes sont calculées à la caisse. Les frais de livraison peuvent varier selon la destination.
         </p>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   )
 }
+
