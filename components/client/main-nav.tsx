@@ -41,11 +41,6 @@ export default function MainNav({ items }: MainNavProps) {
       description: "Nos offres spéciales",
     },
     {
-      title: "À propos",
-      href: "/client/a-propos",
-      description: "En savoir plus sur nous",
-    },
-    {
       title: "Contact",
       href: "/client/contact",
       description: "Nous contacter",

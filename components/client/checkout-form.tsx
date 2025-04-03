@@ -14,7 +14,7 @@ import { toast } from "../ui/use-toast"
 import { Loader2, Check } from "lucide-react"
 
 // Chargement de Stripe (dans une application réelle, utilisez votre clé publique Stripe)
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "pk_test_stripe_public_key")
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "pk_test_51R9MYvPvUjTJ39ClWzVzqcR2F4jei5jnZqxIrbruASy2TE1RUbwrs7jt0eAiCSdG8Ad4dSv4Ib9OLa3fwXUCLbgo00f0ti8dSk")
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -157,7 +157,7 @@ export function StripeCheckoutForm() {
               <FormItem>
                 <FormLabel>Nom complet</FormLabel>
                 <FormControl>
-                  <Input placeholder="Jean Dupont" {...field} />
+                  <Input placeholder="ange gabriel" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -171,7 +171,7 @@ export function StripeCheckoutForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="jean.dupont@example.com" type="email" {...field} />
+                  <Input placeholder="angegabriel@example.com" type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -185,7 +185,7 @@ export function StripeCheckoutForm() {
               <FormItem>
                 <FormLabel>Adresse</FormLabel>
                 <FormControl>
-                  <Input placeholder="123 Rue du Commerce" {...field} />
+                  <Input placeholder="alibandeng" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -200,7 +200,7 @@ export function StripeCheckoutForm() {
                 <FormItem>
                   <FormLabel>Ville</FormLabel>
                   <FormControl>
-                    <Input placeholder="Paris" {...field} />
+                    <Input placeholder="libreville" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -229,7 +229,7 @@ export function StripeCheckoutForm() {
               <FormItem>
                 <FormLabel>Pays</FormLabel>
                 <FormControl>
-                  <Input placeholder="France" {...field} />
+                  <Input placeholder="GABON" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

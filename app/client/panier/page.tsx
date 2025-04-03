@@ -1,12 +1,9 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import CartItems from "@/components/client/cart-items"
 import CartSummary from "@/components/client/cart-summary"
 import Link from "next/link"
-
-export const metadata = {
-  title: "Panier - ElectroShop",
-  description: "Votre panier d'achat",
-}
 
 export default function CartPage() {
   return (
@@ -34,4 +31,3 @@ export default function CartPage() {
     </div>
   )
 }
-
