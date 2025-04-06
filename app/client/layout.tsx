@@ -1,7 +1,7 @@
 import type React from "react"
-import Header from "@/components/client/header"
-import Footer from "@/components/client/footer"
 import { CartProvider } from "@/components/client/cart-provider"
+import Footer from "@/components/client/footer"
+import Header from "@/components/client/header"
 
 export default function ClientLayout({
   children,
@@ -10,7 +10,7 @@ export default function ClientLayout({
 }) {
   return (
     <CartProvider>
-      <div className="flex min-h-screen flex-col">
+      <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
@@ -18,3 +18,4 @@ export default function ClientLayout({
     </CartProvider>
   )
 }
+

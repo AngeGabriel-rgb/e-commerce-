@@ -1,20 +1,17 @@
 export interface Product {
   id: string
   name: string
-  description: string
-  fullDescription?: string
   price: number
-  oldPrice?: number
-  discount: number
-  image: string
+  description: string
   category: string
-  inStock: boolean
-  rating: number
-  reviewCount: number
-  specifications?: Array<{
-    name: string
-    value: string
-  }>
+  image: string
+  stock?: number
+  rating?: number
+  reviews?: number
+  features?: string[]
+  specs?: Record<string, string>
+  colors?: { name: string; value: string }[]
+
   createdAt?: Date
   updatedAt?: Date
 }
@@ -104,4 +101,5 @@ export interface CartItem {
   product: Product
   quantity: number
 }
+
 

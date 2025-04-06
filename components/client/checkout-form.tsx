@@ -5,16 +5,17 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { useStripe, useElements, Elements, CardElement } from "@stripe/react-stripe-js"
+import { useCart } from "./cart-provider"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { CardElement, useStripe, useElements, Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
-import { toast } from "../ui/use-toast"
 import { Loader2, Check } from "lucide-react"
+import { toast } from "@/components/ui/use-toast"
 
-// Chargement de Stripe (dans une application réelle, utilisez votre clé publique Stripe)
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "pk_test_51R9MYvPvUjTJ39ClWzVzqcR2F4jei5jnZqxIrbruASy2TE1RUbwrs7jt0eAiCSdG8Ad4dSv4Ib9OLa3fwXUCLbgo00f0ti8dSk")
+// Chargement de Stripe
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "")
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -27,12 +28,14 @@ const checkoutSchema = z.object({
 
 type CheckoutFormValues = z.infer<typeof checkoutSchema>
 
-export function StripeCheckoutForm() {
+function CheckoutFormContent() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [paymentSuccess, setPaymentSuccess] = useState(false)
+  const [cardError, setCardError] = useState<string | null>(null)
   const router = useRouter()
   const stripe = useStripe()
   const elements = useElements()
+  const { cartItems, total, clearCart } = useCart()
 
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
@@ -42,16 +45,17 @@ export function StripeCheckoutForm() {
       address: "",
       city: "",
       postalCode: "",
-      country: "",
+      country: "France",
     },
   })
 
   const onSubmit = async (data: CheckoutFormValues) => {
-    if (!stripe || !elements) {
+    if (!stripe || !elements || cartItems.length === 0) {
       return
     }
 
     setIsProcessing(true)
+    setCardError(null)
 
     try {
       // Créer une intention de paiement côté serveur
@@ -59,12 +63,20 @@ export function StripeCheckoutForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: 1079.99,
+          amount: total + (total > 50 ? 0 : 5.99) + total * 0.2, // Total + livraison + TVA
           currency: "eur",
           customer_email: data.email,
           metadata: {
             address: `${data.address}, ${data.city}, ${data.postalCode}, ${data.country}`,
             customer_name: data.name,
+            items: JSON.stringify(
+              cartItems.map((item) => ({
+                id: item.product.id,
+                name: item.product.name,
+                quantity: item.quantity,
+                price: item.product.price,
+              })),
+            ),
           },
         }),
       })
@@ -99,11 +111,13 @@ export function StripeCheckoutForm() {
       })
 
       if (error) {
+        setCardError(error.message || "Une erreur est survenue lors du paiement")
         throw new Error(error.message)
       }
 
       if (paymentIntent.status === "succeeded") {
         setPaymentSuccess(true)
+        clearCart() // Vider le panier après un paiement réussi
 
         toast({
           title: "Paiement réussi",
@@ -185,7 +199,7 @@ export function StripeCheckoutForm() {
               <FormItem>
                 <FormLabel>Adresse</FormLabel>
                 <FormControl>
-                  <Input placeholder="alibandeng" {...field} />
+                  <Input placeholder="123 Rue du Commerce" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -200,7 +214,7 @@ export function StripeCheckoutForm() {
                 <FormItem>
                   <FormLabel>Ville</FormLabel>
                   <FormControl>
-                    <Input placeholder="libreville" {...field} />
+                    <Input placeholder="lbv" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -229,7 +243,7 @@ export function StripeCheckoutForm() {
               <FormItem>
                 <FormLabel>Pays</FormLabel>
                 <FormControl>
-                  <Input placeholder="GABON" {...field} />
+                  <Input placeholder="gabon" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -241,11 +255,29 @@ export function StripeCheckoutForm() {
           <div>
             <FormLabel htmlFor="card-element">Informations de carte</FormLabel>
             <div className="mt-1 p-3 border rounded-md">
-              <CardElement id="card-element" options={cardElementOptions} />
+              <CardElement
+                id="card-element"
+                options={cardElementOptions}
+                onChange={(e) => {
+                  if (e.error) {
+                    setCardError(e.error.message)
+                  } else {
+                    setCardError(null)
+                  }
+                }}
+              />
             </div>
+            {cardError && <p className="text-sm text-destructive mt-1">{cardError}</p>}
+            <p className="text-xs text-muted-foreground mt-2">
+              Paiement sécurisé via Stripe. Nous ne stockons pas vos informations de carte.
+            </p>
           </div>
 
-          <Button type="submit" className="w-full" disabled={isProcessing || paymentSuccess || !stripe}>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isProcessing || paymentSuccess || !stripe || cartItems.length === 0}
+          >
             {isProcessing ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -266,10 +298,10 @@ export function StripeCheckoutForm() {
   )
 }
 
-export function CheckoutForm() {
+export default function CheckoutForm() {
   return (
     <Elements stripe={stripePromise}>
-      <StripeCheckoutForm />
+      <CheckoutFormContent />
     </Elements>
   )
 }
