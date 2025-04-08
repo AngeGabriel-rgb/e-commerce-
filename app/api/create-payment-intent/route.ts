@@ -3,7 +3,7 @@ import Stripe from "stripe"
 
 // Initialiser Stripe avec votre clé secrète
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2023-10-16", // Utilisez la version la plus récente de l'API
+  apiVersion: "2025-03-31.basil", // Utilisez la version requise par l'API
 })
 
 export async function POST(request: Request) {
@@ -32,4 +32,3 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Erreur lors de la création de l'intention de paiement" }, { status: 500 })
   }
 }
-

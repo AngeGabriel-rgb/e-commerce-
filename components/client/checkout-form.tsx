@@ -58,12 +58,19 @@ function CheckoutFormContent() {
     setCardError(null)
 
     try {
+      // Calculer le montant total
+      const shipping = total > 50 ? 0 : 5.99
+      const tax = total * 0.2
+      const grandTotal = total + shipping + tax
+
+      console.log("Envoi de la requête à /api/create-payment-intent avec le montant:", grandTotal)
+
       // Créer une intention de paiement côté serveur
       const response = await fetch("/api/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: total + (total > 50 ? 0 : 5.99) + total * 0.2, // Total + livraison + TVA
+          amount: grandTotal,
           currency: "eur",
           customer_email: data.email,
           metadata: {
@@ -82,10 +89,13 @@ function CheckoutFormContent() {
       })
 
       if (!response.ok) {
-        throw new Error("Erreur lors de la création de l'intention de paiement")
+        const errorData = await response.json()
+        console.error("Erreur de l'API:", errorData)
+        throw new Error(`Erreur lors de la création de l'intention de paiement: ${response.status}`)
       }
 
       const { clientSecret } = await response.json()
+      console.log("Client secret reçu")
 
       // Confirmer le paiement avec Stripe
       const cardElement = elements.getElement(CardElement)
@@ -171,7 +181,7 @@ function CheckoutFormContent() {
               <FormItem>
                 <FormLabel>Nom complet</FormLabel>
                 <FormControl>
-                  <Input placeholder="ange gabriel" {...field} />
+                  <Input placeholder="" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -185,7 +195,7 @@ function CheckoutFormContent() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="angegabriel@example.com" type="email" {...field} />
+                  <Input placeholder="monemil@gmail.com" type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -199,7 +209,7 @@ function CheckoutFormContent() {
               <FormItem>
                 <FormLabel>Adresse</FormLabel>
                 <FormControl>
-                  <Input placeholder="123 Rue du Commerce" {...field} />
+                  <Input placeholder="" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -214,7 +224,7 @@ function CheckoutFormContent() {
                 <FormItem>
                   <FormLabel>Ville</FormLabel>
                   <FormControl>
-                    <Input placeholder="lbv" {...field} />
+                    <Input placeholder="" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -228,7 +238,7 @@ function CheckoutFormContent() {
                 <FormItem>
                   <FormLabel>Code postal</FormLabel>
                   <FormControl>
-                    <Input placeholder="75001" {...field} />
+                    <Input placeholder="00000" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -243,7 +253,7 @@ function CheckoutFormContent() {
               <FormItem>
                 <FormLabel>Pays</FormLabel>
                 <FormControl>
-                  <Input placeholder="gabon" {...field} />
+                  <Input placeholder="" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
