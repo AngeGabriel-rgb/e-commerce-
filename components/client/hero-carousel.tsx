@@ -17,7 +17,7 @@ interface Slide {
 
 const slides: Slide[] = [
   {
-    image: "/images/b.png?height=600&width=1200",
+    image: "/images/b1.png?height=600&width=1200",
     title: "Découvrez les dernières innovations technologiques",
     description: "Smartphones, ordinateurs, accessoires et bien plus encore à des prix compétitifs",
     buttonText: "Voir les produits",
@@ -26,14 +26,14 @@ const slides: Slide[] = [
     secondaryButtonLink: "/client/promotions",
   },
   {
-    image: "/images/bb2.png?height=600&width=1200",
+    image: "/images/phone.png?height=600&width=1200",
     title: "Nouveaux smartphones à prix réduits",
     description: "Profitez de nos offres exclusives sur les derniers modèles de smartphones",
     buttonText: "Découvrir",
     buttonLink: "/client/produits?category=smartphones",
   },
   {
-    image: "/images/bb3.png?height=600&width=1200",
+    image: "/images/acc.png?height=600&width=1200",
     title: "Accessoires high-tech",
     description: "Complétez votre équipement avec notre sélection d'accessoires de qualité",
     buttonText: "Voir les accessoires",
