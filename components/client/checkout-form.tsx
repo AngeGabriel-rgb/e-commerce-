@@ -13,6 +13,8 @@ import { CardElement, useStripe, useElements, Elements } from "@stripe/react-str
 import { loadStripe } from "@stripe/stripe-js"
 import { Loader2, Check } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
+// Importer le composant TestPaymentCards
+import { TestPaymentCards } from "./test-payment-cards"
 
 // Chargement de Stripe
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "")
@@ -181,7 +183,7 @@ function CheckoutFormContent() {
               <FormItem>
                 <FormLabel>Nom complet</FormLabel>
                 <FormControl>
-                  <Input placeholder="" {...field} />
+                  <Input placeholder="Jean Dupont" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -195,7 +197,7 @@ function CheckoutFormContent() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="monemil@gmail.com" type="email" {...field} />
+                  <Input placeholder="jean.dupont@example.com" type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -209,7 +211,7 @@ function CheckoutFormContent() {
               <FormItem>
                 <FormLabel>Adresse</FormLabel>
                 <FormControl>
-                  <Input placeholder="" {...field} />
+                  <Input placeholder="123 Rue du Commerce" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -224,7 +226,7 @@ function CheckoutFormContent() {
                 <FormItem>
                   <FormLabel>Ville</FormLabel>
                   <FormControl>
-                    <Input placeholder="" {...field} />
+                    <Input placeholder="Paris" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -238,7 +240,7 @@ function CheckoutFormContent() {
                 <FormItem>
                   <FormLabel>Code postal</FormLabel>
                   <FormControl>
-                    <Input placeholder="00000" {...field} />
+                    <Input placeholder="75001" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -253,7 +255,7 @@ function CheckoutFormContent() {
               <FormItem>
                 <FormLabel>Pays</FormLabel>
                 <FormControl>
-                  <Input placeholder="" {...field} />
+                  <Input placeholder="France" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -302,6 +304,7 @@ function CheckoutFormContent() {
               "Payer maintenant"
             )}
           </Button>
+          <TestPaymentCards />
         </div>
       </form>
     </Form>
@@ -315,4 +318,3 @@ export default function CheckoutForm() {
     </Elements>
   )
 }
-
