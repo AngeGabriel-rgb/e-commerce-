@@ -17,13 +17,14 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   }
 
   return {
-    title: `${product.name} - ElectroShop`,
+    title: `${product.name} - OloStore`,
     description: product.description,
   }
 }
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
-  const product = await getProductById(params.id)
+  const { id } = params;
+  const product = await getProductById(id)
 
   if (!product) {
     notFound()
@@ -49,10 +50,10 @@ export default async function ProductPage({ params }: { params: { id: string } }
           <div className="flex items-center mb-4">
             <div className="flex text-yellow-400 mr-2">
               {Array.from({ length: 5 }).map((_, i) => (
-                <span key={i}>{i < Math.floor(product.rating) ? "★" : "☆"}</span>
+                <span key={i}>{product.rating !== undefined && i < Math.floor(product.rating) ? "★" : "☆"}</span>
               ))}
             </div>
-            <span className="text-muted-foreground">({product.reviewCount} avis)</span>
+            <span className="text-muted-foreground">({product.reviewCount || 0} avis)</span>
           </div>
 
           <div className="text-3xl font-bold mb-6">{product.price} €</div>
@@ -62,8 +63,8 @@ export default async function ProductPage({ params }: { params: { id: string } }
           <div className="mb-6">
             <h3 className="font-medium mb-2">Disponibilité:</h3>
             <div className="flex items-center">
-              <div className={`w-3 h-3 rounded-full mr-2 ${product.inStock ? "bg-green-500" : "bg-red-500"}`}></div>
-              <span>{product.inStock ? "En stock" : "Rupture de stock"}</span>
+              <div className={`w-3 h-3 rounded-full mr-2 ${product.stock ? "bg-green-500" : "bg-red-500"}`}></div>
+              <span>{product.stock ? "En stock" : "Rupture de stock"}</span>
             </div>
           </div>
 
@@ -92,7 +93,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
           <TabsTrigger value="reviews">Avis ({product.reviewCount})</TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="p-4">
-          <div dangerouslySetInnerHTML={{ __html: product.fullDescription || product.description }} />
+          <div dangerouslySetInnerHTML={{ __html: product.description }} />
         </TabsContent>
         <TabsContent value="specifications" className="p-4">
           <table className="w-full border-collapse">

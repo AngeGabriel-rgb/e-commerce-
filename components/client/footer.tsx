@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-lg font-bold mb-4">ElectroShop</h3>
+            <h3 className="text-lg font-bold mb-4">OloStore</h3>
             <p className="text-muted-foreground mb-4">
               Votre destination pour tous vos besoins en électronique. Qualité, service et prix compétitifs.
             </p>
@@ -108,7 +108,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t mt-12 pt-8 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} ElectroShop. Tous droits réservés.</p>
+          <p>&copy; {new Date().getFullYear()} OloStore. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

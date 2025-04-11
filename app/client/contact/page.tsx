@@ -4,7 +4,7 @@ import { Phone, Mail, MapPin, Clock } from "lucide-react"
 import ContactForm from "../../../components/client/contact-form"
 
 export const metadata = {
-  title: "Contact - ElectroShop",
+  title: "Contact - OloStore",
   description: "Contactez notre équipe pour toute question ou assistance",
 }
 
@@ -43,7 +43,7 @@ export default function ContactPage() {
           </CardHeader>
           <CardContent>
             <p className="mb-2">Pour toute question :</p>
-            <p className="font-medium">contact@electroshop.fr</p>
+            <p className="font-medium">contact@OloStore.fr</p>
             <p className="text-sm text-muted-foreground mt-2">Nous répondons sous 24h</p>
           </CardContent>
         </Card>

@@ -4,15 +4,15 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 export const metadata: Metadata = {
-  title: "À propos - ElectroShop",
-  description: "Découvrez l'histoire et les valeurs d'ElectroShop",
+  title: "À propos - OloStore",
+  description: "Découvrez l'histoire et les valeurs d'OloStore",
 }
 
 export default function AboutPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-6 text-center">À propos d'ElectroShop</h1>
+        <h1 className="text-4xl font-bold mb-6 text-center">À propos d'OloStore</h1>
 
         <div className="relative h-[300px] mb-8 rounded-lg overflow-hidden">
           <Image
@@ -27,7 +27,7 @@ export default function AboutPage() {
           <section>
             <h2 className="text-2xl font-bold mb-4">Notre histoire</h2>
             <p className="text-muted-foreground mb-4">
-              Fondée en 2010, ElectroShop est née de la passion de trois amis pour la technologie et l'innovation. Ce
+              Fondée en 2010, OloStore est née de la passion de trois amis pour la technologie et l'innovation. Ce
               qui a commencé comme une petite boutique dans le centre-ville s'est rapidement développé pour devenir l'un
               des leaders de la vente d'électronique en ligne dans la région.
             </p>
@@ -41,7 +41,7 @@ export default function AboutPage() {
           <section>
             <h2 className="text-2xl font-bold mb-4">Notre mission</h2>
             <p className="text-muted-foreground">
-              Chez ElectroShop, notre mission est de rendre la technologie accessible à tous. Nous croyons que chacun
+              Chez OloStore, notre mission est de rendre la technologie accessible à tous. Nous croyons que chacun
               devrait pouvoir profiter des avantages de la technologie moderne, c'est pourquoi nous nous efforçons de
               proposer une large gamme de produits à des prix abordables, accompagnés de conseils d'experts pour vous
               aider à faire les meilleurs choix.
@@ -151,7 +151,7 @@ export default function AboutPage() {
           </section>
 
           <div className="bg-muted p-8 rounded-lg text-center mt-12">
-            <h2 className="text-2xl font-bold mb-4">Rejoignez la famille ElectroShop</h2>
+            <h2 className="text-2xl font-bold mb-4">Rejoignez la famille OloStore</h2>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
               Découvrez notre large gamme de produits électroniques et bénéficiez d'un service client exceptionnel.
             </p>

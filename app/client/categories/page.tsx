@@ -4,7 +4,7 @@ import { Card, CardContent } from "../../../components/ui/card"
 import FallbackImage from "../../../components/client/fallback-image"
 
 export const metadata = {
-  title: "Catégories - ElectroShop",
+  title: "Catégories - OloStore",
   description: "Parcourez nos catégories de produits électroniques",
 }
 

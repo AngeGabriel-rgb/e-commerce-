@@ -43,7 +43,7 @@ export default function Header() {
             }}
             className="flex items-center cursor-pointer"
           >
-            <span className="text-xl font-bold">ElectroShop</span>
+            <span className="text-xl font-bold">OloStore</span>
           </button>
 
           {/* Desktop Navigation */}

@@ -11,7 +11,9 @@ export interface Product {
   features?: string[]
   specs?: Record<string, string>
   colors?: { name: string; value: string }[]
-
+  reviewCount?: number;
+  specifications?: string[]
+  status: "active" | "inactive"
   createdAt?: Date
   updatedAt?: Date
 }

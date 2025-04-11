@@ -4,7 +4,7 @@ import { OrdersSkeleton } from "@/components/client/orders-skeleton"
 import { AccountSidebar } from "@/components/client/account-sidebar"
 
 export const metadata = {
-  title: "Mes commandes - ElectroShop",
+  title: "Mes commandes - OloStore",
   description: "Historique et suivi de vos commandes",
 }
 

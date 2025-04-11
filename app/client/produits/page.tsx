@@ -6,7 +6,7 @@ import ProductFilters from "../../../components/client/product-filters"
 import SearchBar from "../../../components/client/search-bar"
 
 export const metadata = {
-  title: "Produits - ElectroShop",
+  title: "Produits - OloStore",
   description: "Parcourez notre sélection de produits électroniques",
 }
 

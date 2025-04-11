@@ -7,7 +7,7 @@ import { Badge } from "../../../components/ui/badge"
 import Link from "next/link"
 
 export const metadata = {
-  title: "Promotions - ElectroShop",
+  title: "Promotions - OloStore",
   description: "Découvrez nos offres spéciales et codes promotionnels",
 }
 

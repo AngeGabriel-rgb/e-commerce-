@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../../../.
 import { CheckCircle } from "lucide-react"
 
 export const metadata = {
-  title: "Confirmation de commande - ElectroShop",
+  title: "Confirmation de commande - OloStore",
   description: "Votre commande a été confirmée",
 }
 

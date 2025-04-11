@@ -32,7 +32,7 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
           <span className="sr-only">Toggle menu</span>
         </Button>
         <Link href="/admin" className="font-semibold">
-          ElectroShop Admin
+          OloStore Admin
         </Link>
       </div>
       <div className="hidden md:flex md:flex-1 md:items-center md:gap-4 md:px-6">

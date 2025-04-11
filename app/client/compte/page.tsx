@@ -2,7 +2,7 @@ import { AccountSidebar } from "@/components/client/account-sidebar"
 import { AccountOverview } from "@/components/client/account-overview"
 
 export const metadata = {
-  title: "Mon compte - ElectroShop",
+  title: "Mon compte - OloStore",
   description: "Gérez votre compte et vos préférences",
 }
 

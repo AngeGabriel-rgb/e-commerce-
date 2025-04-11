@@ -57,7 +57,7 @@ export default function AdminSidebar() {
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link href="/admin" className="flex items-center gap-2 font-semibold">
             <Package className="h-6 w-6" />
-            <span>ElectroShop Admin</span>
+            <span>OloStore Admin</span>
           </Link>
         </div>
         <div className="flex-1 overflow-auto py-2">
