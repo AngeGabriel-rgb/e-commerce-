@@ -11,7 +11,7 @@ export interface Product {
   features?: string[]
   specs?: Record<string, string>
   colors?: { name: string; value: string }[]
-  reviewCount?: number;
+  reviewCount?: number
   specifications?: string[]
   status: "active" | "inactive"
   createdAt?: Date
@@ -28,17 +28,21 @@ export interface Category {
   updatedAt: Date
 }
 
-export interface Review {
+export interface Promotion {
   id: string
-  productId: string
-  userId: string
-  userName: string
-  rating: number
-  comment: string
-  status: "pending" | "approved" | "rejected"
+  code: string
+  type: "percentage" | "fixed"
+  value: number
+  minPurchase: number
+  startDate: Date
+  endDate: Date
+  usageLimit: number
+  usageCount: number
+  products: string[]
+  categories: string[]
+  active: boolean
   createdAt: Date
-  product?: Product
-  user?: User
+  updatedAt: Date
 }
 
 export interface User {
@@ -82,26 +86,20 @@ export interface Address {
   isDefault: boolean
 }
 
-export interface Promotion {
+export interface Review {
   id: string
-  code: string
-  type: "percentage" | "fixed"
-  value: number
-  minPurchase: number
-  startDate: Date
-  endDate: Date
-  usageLimit: number
-  usageCount: number
-  products: string[]
-  categories: string[]
-  active: boolean
+  productId: string
+  userId: string
+  userName: string
+  rating: number
+  comment: string
+  status: "pending" | "approved" | "rejected"
   createdAt: Date
-  updatedAt: Date
+  product?: Product
+  user?: User
 }
 
 export interface CartItem {
   product: Product
   quantity: number
 }
-
-
