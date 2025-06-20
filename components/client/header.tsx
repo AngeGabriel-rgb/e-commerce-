@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
@@ -12,6 +11,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useCart } from "./cart-provider"
 import MainNav from "./main-nav"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useUser, useClerk, SignInButton, SignUpButton } from "@clerk/nextjs"
 
 export default function Header() {
   const pathname = usePathname()
@@ -20,8 +20,10 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [user, setUser] = useState<any>(null)
+
+  // Clerk hooks
+  const { isSignedIn, user, isLoaded } = useUser()
+  const { signOut } = useClerk()
 
   const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0)
 
@@ -34,45 +36,30 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  useEffect(() => {
-    const checkAuth = () => {
-      const userJson = localStorage.getItem("user")
-      setIsAuthenticated(!!userJson)
-
-      if (userJson) {
-        try {
-          const userData = JSON.parse(userJson)
-          setUser(userData)
-        } catch (error) {
-          console.error("Erreur lors de la récupération des données utilisateur:", error)
-        }
-      } else {
-        setUser(null)
-      }
-    }
-
-    checkAuth()
-    const handleStorageChange = () => {
-      checkAuth()
-    }
-
-    window.addEventListener("storage", handleStorageChange)
-    return () => window.removeEventListener("storage", handleStorageChange)
-  }, [])
-
   const handleAccountClick = (e: React.MouseEvent) => {
-    if (!isAuthenticated) {
+    if (!isSignedIn) {
       e.preventDefault()
-      router.push("/client/auth/login")
+      // Clerk gérera automatiquement la redirection
     }
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem("user")
-    setIsAuthenticated(false)
-    setUser(null)
-    window.dispatchEvent(new Event("storage"))
+  const handleLogout = async () => {
+    await signOut()
     router.push("/client")
+  }
+
+  // Afficher un loader pendant que Clerk charge
+  if (!isLoaded) {
+    return (
+      <header className="sticky top-0 z-50 w-full bg-white shadow-md py-4">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between">
+            <span className="text-xl font-bold">OloStore</span>
+            <div className="animate-pulse bg-gray-200 h-8 w-32 rounded"></div>
+          </div>
+        </div>
+      </header>
+    )
   }
 
   return (
@@ -113,7 +100,7 @@ export default function Header() {
 
             {/* Wishlist */}
             <Button variant="ghost" size="icon" asChild>
-              <Link href={isAuthenticated ? "/client/compte/liste-souhaits" : "/client/auth/login"}>
+              <Link href={isSignedIn ? "/client/compte/liste-souhaits" : "/client/auth/login"}>
                 <Heart className="h-5 w-5" />
                 <span className="sr-only">Liste de souhaits</span>
               </Link>
@@ -133,15 +120,22 @@ export default function Header() {
             </Button>
 
             {/* Account */}
-            {isAuthenticated ? (
+            {isSignedIn ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon">
-                    <User className="h-5 w-5" />
+                    {user?.imageUrl ? (
+                      <img src={user.imageUrl || "/placeholder.svg"} alt="Profile" className="h-5 w-5 rounded-full" />
+                    ) : (
+                      <User className="h-5 w-5" />
+                    )}
                     <span className="sr-only">Compte</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
+                  <div className="px-2 py-1.5 text-sm font-medium">
+                    {user?.firstName || user?.emailAddresses[0]?.emailAddress}
+                  </div>
                   <DropdownMenuItem asChild>
                     <Link href="/client/compte">Mon compte</Link>
                   </DropdownMenuItem>
@@ -166,11 +160,20 @@ export default function Header() {
               </Button>
             )}
 
-            {/* Auth Button - Desktop */}
-            {!isAuthenticated && (
-              <Button variant="default" size="sm" asChild className="hidden md:flex">
-                <Link href="/client/auth/login">Se connecter</Link>
-              </Button>
+            {/* Auth Buttons - Desktop */}
+            {!isSignedIn && (
+              <div className="hidden md:flex space-x-2">
+                <SignInButton mode="modal">
+                  <Button variant="outline" size="sm">
+                    Se connecter
+                  </Button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <Button variant="default" size="sm">
+                    S'inscrire
+                  </Button>
+                </SignUpButton>
+              </div>
             )}
 
             {/* Mobile Menu */}
@@ -216,8 +219,13 @@ export default function Header() {
 
                   {/* User Account Section - Mobile */}
                   <div className="border-t my-4 pt-4">
-                    {isAuthenticated ? (
+                    {isSignedIn ? (
                       <>
+                        <div className="mb-4 p-2 bg-gray-50 rounded">
+                          <p className="text-sm font-medium">
+                            {user?.firstName || user?.emailAddresses[0]?.emailAddress}
+                          </p>
+                        </div>
                         <Link href="/client/compte" className="block py-2 text-lg font-medium">
                           Mon compte
                         </Link>
@@ -232,9 +240,16 @@ export default function Header() {
                         </button>
                       </>
                     ) : (
-                      <Button asChild className="w-full">
-                        <Link href="/client/auth/login">Se connecter</Link>
-                      </Button>
+                      <div className="space-y-2">
+                        <SignInButton mode="modal">
+                          <Button className="w-full">Se connecter</Button>
+                        </SignInButton>
+                        <SignUpButton mode="modal">
+                          <Button variant="outline" className="w-full">
+                            S'inscrire
+                          </Button>
+                        </SignUpButton>
+                      </div>
                     )}
                   </div>
                 </nav>
@@ -268,12 +283,12 @@ export default function Header() {
           height: 2px;
           width: 100%;
           background-color: black;
-          transform: translateY(10px); /* Adjust the position */
+          transform: translateY(10px);
           transition: transform 0.3s ease;
         }
 
         .nav-link:hover::after {
-          transform: translateY(0); /* Move the underline into position */
+          transform: translateY(0);
         }
       `}</style>
     </header>
