@@ -46,9 +46,9 @@ export default async function CategoriesPage() {
       <div className="mt-16 bg-muted rounded-lg p-8">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="mb-6 md:mb-0">
-            <h2 className="text-2xl font-bold mb-2">Besoin d'aide pour choisir ?</h2>
+            <h2 className="text-2xl font-bold mb-2">{"Besoin d'aide pour choisir ?"}</h2>
             <p className="text-muted-foreground mb-4">
-              Notre équipe d'experts est disponible pour vous guider dans votre choix de produits électroniques.
+              {"Notre équipe d'experts est disponible pour vous guider dans votre choix de produits électroniques."}
             </p>
             <Link
               href="/client/contact"
@@ -69,4 +69,3 @@ export default async function CategoriesPage() {
     </div>
   )
 }
-

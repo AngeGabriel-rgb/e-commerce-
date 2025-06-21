@@ -5,6 +5,7 @@ import { formatDate } from "../../../lib/utils"
 import { Tag, Clock, Check } from "lucide-react"
 import { Badge } from "../../../components/ui/badge"
 import Link from "next/link"
+import Image from "next/image"
 
 export const metadata = {
   title: "Promotions - OloStore",
@@ -19,8 +20,9 @@ export default async function PromotionsPage() {
       <div className="mb-8 text-center">
         <h1 className="text-4xl font-bold mb-4">Nos Promotions</h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Découvrez nos offres spéciales et codes promotionnels pour économiser sur vos achats d'électronique. N'oubliez
-          pas de copier le code promo avant de passer à la caisse !
+          {
+            "Découvrez nos offres spéciales et codes promotionnels pour économiser sur vos achats d'électronique. N'oubliez pas de copier le code promo avant de passer à la caisse !"
+          }
         </p>
       </div>
 
@@ -54,7 +56,9 @@ export default async function PromotionsPage() {
                     )}
                     <div className="flex items-center gap-2">
                       <Clock className="h-4 w-4 text-muted-foreground" />
-                      <span>Valable jusqu'au {formatDate(promo.endDate)}</span>
+                      <span>
+                        {"Valable jusqu'au"} {formatDate(promo.endDate)}
+                      </span>
                     </div>
                   </div>
 
@@ -76,7 +80,7 @@ export default async function PromotionsPage() {
         ) : (
           <div className="col-span-full text-center py-12">
             <h3 className="text-xl font-medium mb-2">Aucune promotion en cours</h3>
-            <p className="text-muted-foreground">Revenez bientôt pour découvrir nos nouvelles offres !</p>
+            <p className="text-muted-foreground">{"Revenez bientôt pour découvrir nos nouvelles offres !"}</p>
           </div>
         )}
       </div>
@@ -84,7 +88,7 @@ export default async function PromotionsPage() {
       <div className="mt-12 bg-primary/5 rounded-xl p-8">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="mb-6 md:mb-0 md:mr-8">
-            <h2 className="text-3xl font-bold mb-4">Inscrivez-vous à notre newsletter</h2>
+            <h2 className="text-3xl font-bold mb-4">{"Inscrivez-vous à notre newsletter"}</h2>
             <p className="text-muted-foreground mb-4">Recevez en avant-première nos offres exclusives et codes promo</p>
             <div className="flex">
               <input
@@ -92,17 +96,18 @@ export default async function PromotionsPage() {
                 placeholder="Votre email"
                 className="px-4 py-2 border rounded-l-md w-full focus:outline-none focus:ring-2 focus:ring-primary"
               />
-              <Button className="rounded-l-none">S'inscrire</Button>
+              <Button className="rounded-l-none">{"S'inscrire"}</Button>
             </div>
           </div>
-          <img
+          <Image
             src="/images/new.png?height=200&width=300"
             alt="Newsletter"
-            className="w-full max-w-[300px] h-auto rounded-lg"
+            width={300}
+            height={200}
+            className="rounded-lg"
           />
         </div>
       </div>
     </div>
   )
 }
-

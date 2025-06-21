@@ -211,7 +211,7 @@ export default function UserAddresses({ userId }: UserAddressesProps) {
       ) : (
         <div className="text-center py-12 bg-muted/20 rounded-lg">
           <h3 className="text-lg font-medium mb-2">Aucune adresse enregistrée</h3>
-          <p className="text-muted-foreground mb-4">Ajoutez une adresse pour faciliter vos prochaines commandes.</p>
+          <p className="text-muted-foreground mb-4">{"Ajoutez une adresse pour faciliter vos prochaines commandes."}</p>
           <Button>
             <PlusCircle className="h-4 w-4 mr-2" />
             Ajouter une adresse
@@ -222,9 +222,9 @@ export default function UserAddresses({ userId }: UserAddressesProps) {
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Êtes-vous sûr de vouloir supprimer cette adresse ?</AlertDialogTitle>
+            <AlertDialogTitle>{"Êtes-vous sûr de vouloir supprimer cette adresse ?"}</AlertDialogTitle>
             <AlertDialogDescription>
-              Cette action est irréversible. L'adresse sera définitivement supprimée de votre compte.
+              {"Cette action est irréversible. L'adresse sera définitivement supprimée de votre compte."}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -238,4 +238,3 @@ export default function UserAddresses({ userId }: UserAddressesProps) {
     </div>
   )
 }
-

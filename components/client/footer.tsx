@@ -84,7 +84,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/client/conditions" className="text-muted-foreground hover:text-primary">
-                  Conditions d'utilisation
+                  {"Conditions d'utilisation"}
                 </Link>
               </li>
               <li>
@@ -98,11 +98,11 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-bold mb-4">Newsletter</h3>
             <p className="text-muted-foreground mb-4">
-              Inscrivez-vous pour recevoir nos dernières offres et nouveautés.
+              {"Inscrivez-vous pour recevoir nos dernières offres et nouveautés."}
             </p>
             <div className="flex flex-col space-y-2">
               <Input type="email" placeholder="Votre email" />
-              <Button>S'abonner</Button>
+              <Button>{"S'abonner"}</Button>
             </div>
           </div>
         </div>
@@ -114,4 +114,3 @@ export default function Footer() {
     </footer>
   )
 }
-

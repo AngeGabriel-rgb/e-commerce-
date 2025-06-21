@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const testimonials = [
   {
@@ -28,40 +28,36 @@ const testimonials = [
   },
 ]
 
-export default function Testimonials() {
+export function Testimonials() {
   return (
-    <section className="py-16 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Ce que disent nos clients</h2>
+    <section className="bg-secondary py-12">
+      <div className="container">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-semibold">Ce que nos clients disent</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Découvrez les témoignages de nos clients satisfaits qui nous font confiance pour leurs achats
-            d'électronique.
+            {
+              "Découvrez les témoignages de nos clients satisfaits qui nous font confiance pour leurs achats d'électronique."
+            }
           </p>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((testimonial) => (
-            <Card key={testimonial.id} className="h-full">
-              <CardContent className="p-6 flex flex-col h-full">
-                <div className="flex items-center mb-4">
-                  <Avatar className="h-12 w-12 mr-4">
-                    <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
-                    <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+            <Card key={testimonial.id}>
+              <CardHeader>
+                <CardTitle>{testimonial.name}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center space-x-4 mb-4">
+                  <Avatar>
+                    <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.name} />
+                    <AvatarFallback>{testimonial.name.substring(0, 2)}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <div className="font-medium">{testimonial.name}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+                    <p className="text-sm font-medium">{testimonial.name}</p>
+                    <p className="text-xs text-muted-foreground">{testimonial.role}</p>
                   </div>
                 </div>
-                <div className="flex-grow">
-                  <p className="text-muted-foreground">{testimonial.content}</p>
-                </div>
-                <div className="flex text-yellow-400 mt-4">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={i}>★</span>
-                  ))}
-                </div>
+                <p className="text-sm text-muted-foreground">{testimonial.content}</p>
               </CardContent>
             </Card>
           ))}
@@ -70,4 +66,3 @@ export default function Testimonials() {
     </section>
   )
 }
-

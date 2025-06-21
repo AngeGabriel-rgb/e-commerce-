@@ -189,7 +189,7 @@ export default async function OrderDetailsPage({ params }: { params: { id: strin
                         : order.status === "processing"
                           ? "Nous préparons actuellement votre commande"
                           : order.status === "pending"
-                            ? "Votre commande est en attente de validation"
+                            ? "Votre commande est en attente de traitement"
                             : "Votre commande a été annulée"}
                   </p>
                 </div>
@@ -277,11 +277,11 @@ export default async function OrderDetailsPage({ params }: { params: { id: strin
           {/* Besoin d'aide */}
           <div className="bg-white rounded-lg border overflow-hidden">
             <div className="bg-muted/50 px-4 py-3 border-b">
-              <h2 className="font-medium">Besoin d'aide ?</h2>
+              <h2 className="font-medium">{"Besoin d'aide ?"}</h2>
             </div>
             <div className="p-4">
               <p className="text-sm mb-4">
-                Si vous avez des questions concernant votre commande, n'hésitez pas à nous contacter.
+                {"Si vous avez des questions concernant votre commande, n'hésitez pas à nous contacter."}
               </p>
               <Button className="w-full">Contacter le service client</Button>
             </div>
@@ -291,4 +291,3 @@ export default async function OrderDetailsPage({ params }: { params: { id: strin
     </div>
   )
 }
-

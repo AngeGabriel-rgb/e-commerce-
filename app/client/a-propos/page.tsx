@@ -12,7 +12,7 @@ export default function AboutPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-6 text-center">À propos d'OloStore</h1>
+        <h1 className="text-4xl font-bold mb-6 text-center">{"À propos d'OloStore"}</h1>
 
         <div className="relative h-[300px] mb-8 rounded-lg overflow-hidden">
           <Image
@@ -27,31 +27,30 @@ export default function AboutPage() {
           <section>
             <h2 className="text-2xl font-bold mb-4">Notre histoire</h2>
             <p className="text-muted-foreground mb-4">
-              Fondée en 2010, OloStore est née de la passion de trois amis pour la technologie et l'innovation. Ce
-              qui a commencé comme une petite boutique dans le centre-ville s'est rapidement développé pour devenir l'un
-              des leaders de la vente d'électronique en ligne dans la région.
+              {
+                "Fondée en 2010, OloStore est née de la passion de trois amis pour la technologie et l'innovation. Ce qui a commencé comme une petite boutique dans le centre-ville s'est rapidement développé pour devenir l'un des leaders de la vente d'électronique en ligne dans la région."
+              }
             </p>
             <p className="text-muted-foreground">
-              Au fil des années, nous avons constamment évolué pour offrir à nos clients les dernières innovations
-              technologiques tout en maintenant notre engagement envers un service client exceptionnel et des prix
-              compétitifs.
+              {
+                "Au fil des années, nous avons constamment évolué pour offrir à nos clients les dernières innovations technologiques tout en maintenant notre engagement envers un service client exceptionnel et des prix compétitifs."
+              }
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-bold mb-4">Notre mission</h2>
             <p className="text-muted-foreground">
-              Chez OloStore, notre mission est de rendre la technologie accessible à tous. Nous croyons que chacun
-              devrait pouvoir profiter des avantages de la technologie moderne, c'est pourquoi nous nous efforçons de
-              proposer une large gamme de produits à des prix abordables, accompagnés de conseils d'experts pour vous
-              aider à faire les meilleurs choix.
+              {
+                "Chez OloStore, notre mission est de rendre la technologie accessible à tous. Nous croyons que chacun devrait pouvoir profiter des avantages de la technologie moderne, c'est pourquoi nous nous efforçons de proposer une large gamme de produits à des prix abordables, accompagnés de conseils d'experts pour vous aider à faire les meilleurs choix."
+              }
             </p>
           </section>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-12">
             <div className="bg-muted p-6 rounded-lg text-center">
               <div className="text-4xl font-bold text-primary mb-2">10+</div>
-              <p className="text-muted-foreground">Années d'expérience</p>
+              <p className="text-muted-foreground">{"Années d'expérience"}</p>
             </div>
             <div className="bg-muted p-6 rounded-lg text-center">
               <div className="text-4xl font-bold text-primary mb-2">50k+</div>
@@ -66,9 +65,9 @@ export default function AboutPage() {
           <section>
             <h2 className="text-2xl font-bold mb-4">Notre équipe</h2>
             <p className="text-muted-foreground mb-6">
-              Notre équipe est composée de passionnés de technologie, d'experts en électronique et de professionnels du
-              service client dévoués. Ensemble, nous travaillons pour vous offrir la meilleure expérience d'achat
-              possible.
+              {
+                "Notre équipe est composée de passionnés de technologie, d'experts en électronique et de professionnels du service client dévoués. Ensemble, nous travaillons pour vous offrir la meilleure expérience d'achat possible."
+              }
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -121,7 +120,7 @@ export default function AboutPage() {
                 <div>
                   <h3 className="font-bold">Service client</h3>
                   <p className="text-muted-foreground">
-                    Nous sommes dévoués à offrir un service client exceptionnel avant, pendant et après l'achat.
+                    {"Nous sommes dévoués à offrir un service client exceptionnel avant, pendant et après l'achat."}
                   </p>
                 </div>
               </li>
@@ -143,7 +142,9 @@ export default function AboutPage() {
                 <div>
                   <h3 className="font-bold">Durabilité</h3>
                   <p className="text-muted-foreground">
-                    Nous nous engageons à réduire notre impact environnemental et à promouvoir des pratiques durables.
+                    {
+                      "Nous nous engageons à réduire notre impact environnemental et à promouvoir des pratiques durables."
+                    }
                   </p>
                 </div>
               </li>
@@ -153,7 +154,7 @@ export default function AboutPage() {
           <div className="bg-muted p-8 rounded-lg text-center mt-12">
             <h2 className="text-2xl font-bold mb-4">Rejoignez la famille OloStore</h2>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Découvrez notre large gamme de produits électroniques et bénéficiez d'un service client exceptionnel.
+              {"Découvrez notre large gamme de produits électroniques et bénéficiez d'un service client exceptionnel."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg">
@@ -169,4 +170,3 @@ export default function AboutPage() {
     </div>
   )
 }
-

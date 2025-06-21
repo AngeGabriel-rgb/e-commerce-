@@ -50,8 +50,9 @@ export default function OrderConfirmationPage() {
               </div>
 
               <p className="text-center text-sm text-muted-foreground">
-                Un email de confirmation a été envoyé à votre adresse email. Vous pouvez suivre l'état de votre commande
-                dans votre espace client.
+                {
+                  "Un email de confirmation a été envoyé à votre adresse email. Vous pouvez suivre l'état de votre commande dans votre espace client."
+                }
               </p>
             </div>
           </CardContent>
@@ -60,7 +61,7 @@ export default function OrderConfirmationPage() {
               <Link href="/client/compte/commandes">Voir mes commandes</Link>
             </Button>
             <Button variant="outline" asChild>
-              <Link href="/client">Retour à l'accueil</Link>
+              <Link href="/client">{"Retour à l'accueil"}</Link>
             </Button>
           </CardFooter>
         </Card>
@@ -68,4 +69,3 @@ export default function OrderConfirmationPage() {
     </div>
   )
 }
-

@@ -82,7 +82,7 @@ export default async function CategoryPage({ params }: { params: { id: string } 
         ) : (
           <div className="text-center py-12 bg-muted/20 rounded-lg">
             <h3 className="text-lg font-medium mb-2">Aucun produit trouvé</h3>
-            <p className="text-muted-foreground mb-4">Il n'y a actuellement aucun produit dans cette catégorie.</p>
+            <p className="text-muted-foreground mb-4">{"Il n'y a actuellement aucun produit dans cette catégorie."}</p>
             <Button asChild>
               <Link href="/client/produits">Voir tous les produits</Link>
             </Button>
@@ -92,4 +92,3 @@ export default async function CategoryPage({ params }: { params: { id: string } 
     </div>
   )
 }
-

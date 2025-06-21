@@ -1,13 +1,11 @@
-// components/client/cart-items.tsx
 "use client"
 
-import { useState } from "react"
 import Image from "next/image"
-import { Trash2, Plus, Minus } from 'lucide-react'
+import Link from "next/link"
+import { Trash2, Plus, Minus } from "lucide-react"
 import { Button } from "../ui/button"
 import { useCart } from "./cart-provider"
 import { formatPrice } from "../../lib/utils"
-import { Separator } from "../ui/separator"
 
 export default function CartItems() {
   const { cartItems, updateQuantity, removeFromCart } = useCart()
@@ -19,11 +17,9 @@ export default function CartItems() {
           <Trash2 className="h-10 w-10 text-muted-foreground" />
         </div>
         <h3 className="mb-2 text-xl font-medium">Votre panier est vide</h3>
-        <p className="mb-6 text-muted-foreground">
-          Vous n'avez pas encore ajouté de produits à votre panier.
-        </p>
+        <p className="mb-6 text-muted-foreground">{"Vous n'avez pas encore ajouté de produits à votre panier."}</p>
         <Button asChild>
-          <a href="/client/produits">Parcourir les produits</a>
+          <Link href="/client/produits">Parcourir les produits</Link>
         </Button>
       </div>
     )
@@ -48,13 +44,11 @@ export default function CartItems() {
               <div className="flex justify-between">
                 <div>
                   <h3 className="text-base font-medium">
-                    <a href={`/client/produits/${item.product.id}`}>{item.product.name}</a>
+                    <Link href={`/client/produits/${item.product.id}`}>{item.product.name}</Link>
                   </h3>
                   <p className="mt-1 text-sm text-muted-foreground">{item.product.category}</p>
                 </div>
-                <p className="text-base font-medium">
-                  {formatPrice(item.product.price * item.quantity)}
-                </p>
+                <p className="text-base font-medium">{formatPrice(item.product.price * item.quantity)}</p>
               </div>
 
               <div className="mt-4 flex items-center justify-between">
@@ -98,7 +92,7 @@ export default function CartItems() {
 
       <div className="flex justify-between pt-4">
         <Button variant="outline" asChild>
-          <a href="/client/produits">Continuer vos achats</a>
+          <Link href="/client/produits">Continuer vos achats</Link>
         </Button>
         <Button variant="ghost" className="text-muted-foreground" onClick={() => window.location.reload()}>
           Actualiser le panier

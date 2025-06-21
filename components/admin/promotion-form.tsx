@@ -176,7 +176,12 @@ export default function PromotionForm({ promotion, products, categories }: Promo
                     <FormItem>
                       <FormLabel>Valeur</FormLabel>
                       <FormControl>
-                        <Input type="number" min="0" step={form.watch("type") === "percentage" ? "1" : "0.01"} {...field} />
+                        <Input
+                          type="number"
+                          min="0"
+                          step={form.watch("type") === "percentage" ? "1" : "0.01"}
+                          {...field}
+                        />
                       </FormControl>
                       <FormDescription>
                         {form.watch("type") === "percentage"
@@ -193,7 +198,7 @@ export default function PromotionForm({ promotion, products, categories }: Promo
                   name="minPurchase"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Montant minimum d'achat (€)</FormLabel>
+                      <FormLabel>{"Montant minimum d'achat (€)"}</FormLabel>
                       <FormControl>
                         <Input type="number" min="0" step="0.01" {...field} />
                       </FormControl>
@@ -298,11 +303,13 @@ export default function PromotionForm({ promotion, products, categories }: Promo
                   name="usageLimit"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Limite d'utilisation</FormLabel>
+                      <FormLabel>{"Limite d'utilisation"}</FormLabel>
                       <FormControl>
                         <Input type="number" min="0" step="1" {...field} />
                       </FormControl>
-                      <FormDescription>Nombre maximum d'utilisations de cette promotion (0 = illimité)</FormDescription>
+                      <FormDescription>
+                        {"Nombre maximum d'utilisations de cette promotion (0 = illimité)"}
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -335,8 +342,9 @@ export default function PromotionForm({ promotion, products, categories }: Promo
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Restrictions</h3>
               <p className="text-sm text-muted-foreground">
-                Vous pouvez limiter cette promotion à certains produits ou catégories. Si aucune restriction n'est
-                sélectionnée, la promotion s'appliquera à tous les produits.
+                {
+                  "Vous pouvez limiter cette promotion à certains produits ou catégories. Si aucune restriction n'est sélectionnée, la promotion s'appliquera à tous les produits."
+                }
               </p>
 
               <div className="space-y-4">
@@ -400,4 +408,3 @@ export default function PromotionForm({ promotion, products, categories }: Promo
     </Form>
   )
 }
-

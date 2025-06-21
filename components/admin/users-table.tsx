@@ -108,7 +108,7 @@ export default function UsersTable({ users }: UsersTableProps) {
               <TableHead>Utilisateur</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Rôle</TableHead>
-              <TableHead>Date d'inscription</TableHead>
+              <TableHead>{"Date d'inscription"}</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -188,10 +188,11 @@ export default function UsersTable({ users }: UsersTableProps) {
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</AlertDialogTitle>
+            <AlertDialogTitle>{"Êtes-vous sûr de vouloir supprimer cet utilisateur ?"}</AlertDialogTitle>
             <AlertDialogDescription>
-              Cette action est irréversible. L'utilisateur sera définitivement supprimé de la base de données, ainsi que
-              toutes ses données associées.
+              {
+                "Cette action est irréversible. L'utilisateur sera définitivement supprimé de la base de données, ainsi que toutes ses données associées."
+              }
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -205,4 +206,3 @@ export default function UsersTable({ users }: UsersTableProps) {
     </>
   )
 }
-

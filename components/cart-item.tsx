@@ -9,10 +9,23 @@ import { formatPrice } from "@/lib/utils"
 interface CartItemProps {
   data: CartItemType
   onRemove: () => void
+  onUpdateQuantity?: (id: string, quantity: number) => void
 }
 
-export function CartItem({ data, onRemove }: CartItemProps) {
+export function CartItem({ data, onRemove, onUpdateQuantity }: CartItemProps) {
   const { id, name, price, image, quantity } = data
+
+  const handleDecrease = () => {
+    if (onUpdateQuantity && quantity > 1) {
+      onUpdateQuantity(id, quantity - 1)
+    }
+  }
+
+  const handleIncrease = () => {
+    if (onUpdateQuantity) {
+      onUpdateQuantity(id, quantity + 1)
+    }
+  }
 
   return (
     <li className="flex py-6">
@@ -47,9 +60,8 @@ export function CartItem({ data, onRemove }: CartItemProps) {
               variant="ghost"
               size="icon"
               className="h-8 w-8 rounded-none"
-              onClick={() => {
-                // Ici, vous pourriez appeler updateQuantity(id, quantity - 1)
-              }}
+              onClick={handleDecrease}
+              disabled={quantity <= 1}
             >
               <Minus size={14} />
               <span className="sr-only">Diminuer la quantité</span>
@@ -57,14 +69,7 @@ export function CartItem({ data, onRemove }: CartItemProps) {
 
             <span className="w-8 text-center">{quantity}</span>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 rounded-none"
-              onClick={() => {
-                // Ici, vous pourriez appeler updateQuantity(id, quantity + 1)
-              }}
-            >
+            <Button variant="ghost" size="icon" className="h-8 w-8 rounded-none" onClick={handleIncrease}>
               <Plus size={14} />
               <span className="sr-only">Augmenter la quantité</span>
             </Button>
@@ -76,4 +81,3 @@ export function CartItem({ data, onRemove }: CartItemProps) {
     </li>
   )
 }
-

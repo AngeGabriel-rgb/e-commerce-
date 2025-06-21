@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ShoppingBag, Settings, Users, Package, BarChart3, Shield, Smartphone, Laptop, Headphones } from "lucide-react"
+import { ShoppingBag, Settings, Users, Package, BarChart3, Shield, Smartphone, Laptop, Headphones } from 'lucide-react'
 
 export default function HomePage() {
   return (
@@ -18,7 +18,7 @@ export default function HomePage() {
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-healer-green bg-clip-text text-transparent">
                  OloStore
                 </h1>
-                <p className="text-sm text-gray-600">Votre boutique d'électronique de confiance</p>
+                <p className="text-sm text-gray-600">Votre boutique d&apos;électronique de confiance</p>
               </div>
             </div>
           </div>
@@ -31,7 +31,7 @@ export default function HomePage() {
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Bienvenue sur OloStore</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Découvrez notre large gamme de produits électroniques ou gérez votre boutique avec nos outils
-            d'administration avancés.
+            d&apos;administration avancés.
           </p>
         </div>
 
@@ -95,7 +95,7 @@ export default function HomePage() {
               </div>
               <Link href="/admin" className="block">
                 <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg">
-                  Accéder à l'administration
+                  Accéder à l&apos;administration
                 </Button>
               </Link>
             </CardContent>

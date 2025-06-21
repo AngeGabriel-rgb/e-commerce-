@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
 import { Button } from "../ui/button"
@@ -88,9 +89,11 @@ export default function ProductsTable({ products }: ProductsTableProps) {
                 <TableRow key={product.id}>
                   <TableCell>
                     <div className="h-10 w-10 rounded-md bg-muted flex items-center justify-center overflow-hidden">
-                      <img
+                      <Image
                         src={product.image || "/placeholder.svg?height=40&width=40"}
                         alt={product.name}
+                        width={40}
+                        height={40}
                         className="h-full w-full object-cover"
                       />
                     </div>
@@ -161,9 +164,9 @@ export default function ProductsTable({ products }: ProductsTableProps) {
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Êtes-vous sûr de vouloir supprimer ce produit ?</AlertDialogTitle>
+            <AlertDialogTitle>{"Êtes-vous sûr de vouloir supprimer ce produit ?"}</AlertDialogTitle>
             <AlertDialogDescription>
-              Cette action est irréversible. Le produit sera définitivement supprimé de la base de données.
+              {"Cette action est irréversible. Le produit sera définitivement supprimé de la base de données."}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -177,4 +180,3 @@ export default function ProductsTable({ products }: ProductsTableProps) {
     </>
   )
 }
-

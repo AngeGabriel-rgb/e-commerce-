@@ -29,7 +29,7 @@ export default async function StatisticsPage() {
 
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
+          <TabsTrigger value="overview">{"Vue d'ensemble"}</TabsTrigger>
           <TabsTrigger value="sales">Ventes</TabsTrigger>
           <TabsTrigger value="products">Produits</TabsTrigger>
           <TabsTrigger value="customers">Clients</TabsTrigger>
@@ -105,7 +105,7 @@ export default async function StatisticsPage() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Taux d'abandon de panier</CardTitle>
+                <CardTitle>{"Taux d'abandon de panier"}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">68%</div>
@@ -215,4 +215,3 @@ export default async function StatisticsPage() {
     </div>
   )
 }
-

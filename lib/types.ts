@@ -1,4 +1,7 @@
 export interface Product {
+  inStock: boolean
+  oldPrice?: number
+  discount?: number
   id: string
   name: string
   price: number
@@ -11,7 +14,7 @@ export interface Product {
   features?: string[]
   specs?: Record<string, string>
   colors?: { name: string; value: string }[]
-  reviewCount?: number;
+  reviewCount?: number
   specifications?: string[]
   status: "active" | "inactive"
   createdAt?: Date
@@ -46,6 +49,7 @@ export interface User {
   name: string
   email: string
   image?: string
+  phone?: string
   role: "user" | "admin"
   createdAt: Date
   addresses?: Address[]
@@ -103,5 +107,4 @@ export interface CartItem {
   product: Product
   quantity: number
 }
-
 

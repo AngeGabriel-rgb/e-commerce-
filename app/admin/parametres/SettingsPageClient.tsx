@@ -13,7 +13,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"
-import { Loader2 } from "lucide-react"
+import { Loader2 } from 'lucide-react'
 
 const generalSettingsSchema = z.object({
   storeName: z.string().min(2, "Le nom de la boutique doit contenir au moins 2 caractères"),
@@ -185,14 +185,14 @@ export default function SettingsPageClient() {
       await new Promise((resolve) => setTimeout(resolve, 1000))
       console.log("Email settings data:", data)
       toast({
-        title: "Paramètres d'email mis à jour",
-        description: "Les paramètres d'email ont été mis à jour avec succès.",
+        title: "Paramètres d&apos;email mis à jour",
+        description: "Les paramètres d&apos;email ont été mis à jour avec succès.",
       })
     } catch (error) {
       console.error("Error saving email settings:", error)
       toast({
         title: "Erreur",
-        description: "Une erreur est survenue lors de la mise à jour des paramètres d'email.",
+        description: "Une erreur est survenue lors de la mise à jour des paramètres d&apos;email.",
         variant: "destructive",
       })
     } finally {
@@ -535,7 +535,7 @@ export default function SettingsPageClient() {
                       <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                         <div className="space-y-0.5">
                           <FormLabel className="text-base">Livraison gratuite</FormLabel>
-                          <FormDescription>Offrir la livraison gratuite à partir d'un certain montant</FormDescription>
+                          <FormDescription>Offrir la livraison gratuite à partir d&apos;un certain montant</FormDescription>
                         </div>
                         <FormControl>
                           <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -596,7 +596,7 @@ export default function SettingsPageClient() {
                       <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                         <div className="space-y-0.5">
                           <FormLabel className="text-base">Livraison internationale</FormLabel>
-                          <FormDescription>Proposer la livraison à l'international</FormDescription>
+                          <FormDescription>Proposer la livraison à l&apos;international</FormDescription>
                         </div>
                         <FormControl>
                           <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -639,9 +639,9 @@ export default function SettingsPageClient() {
         <TabsContent value="email">
           <Card>
             <CardHeader>
-              <CardTitle>Paramètres d'email</CardTitle>
+              <CardTitle>Paramètres d&apos;email</CardTitle>
               <CardDescription>
-                Configurez les paramètres d'envoi d'emails et les notifications automatiques.
+                Configurez les paramètres d&apos;envoi d&apos;emails et les notifications automatiques.
               </CardDescription>
             </CardHeader>
             <Form {...emailForm}>
@@ -681,7 +681,7 @@ export default function SettingsPageClient() {
                       name="smtpUsername"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Nom d'utilisateur SMTP</FormLabel>
+                          <FormLabel>Nom d&apos;utilisateur SMTP</FormLabel>
                           <FormControl>
                             <Input placeholder="username" {...field} />
                           </FormControl>
@@ -709,7 +709,7 @@ export default function SettingsPageClient() {
                       name="emailSender"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Adresse d'expéditeur</FormLabel>
+                          <FormLabel>Adresse d&apos;expéditeur</FormLabel>
                           <FormControl>
                             <Input placeholder="noreply@example.com" {...field} />
                           </FormControl>
@@ -744,8 +744,8 @@ export default function SettingsPageClient() {
                       render={({ field }) => (
                         <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                           <div className="space-y-0.5">
-                            <FormLabel className="text-base">Notification d'expédition</FormLabel>
-                            <FormDescription>Envoyer un email lorsqu'une commande est expédiée</FormDescription>
+                            <FormLabel className="text-base">Notification d&apos;expédition</FormLabel>
+                            <FormDescription>Envoyer un email lorsqu&apos;une commande est expédiée</FormDescription>
                           </div>
                           <FormControl>
                             <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -791,4 +791,3 @@ export default function SettingsPageClient() {
     </div>
   )
 }
-

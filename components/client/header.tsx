@@ -12,13 +12,13 @@ import { useCart } from "./cart-provider"
 import MainNav from "./main-nav"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useUser, useClerk, SignInButton, SignUpButton } from "@clerk/nextjs"
+import Image from "next/image"
 
 export default function Header() {
   const pathname = usePathname()
   const router = useRouter()
   const { cartItems } = useCart()
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   // Clerk hooks
@@ -125,7 +125,13 @@ export default function Header() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon">
                     {user?.imageUrl ? (
-                      <img src={user.imageUrl || "/placeholder.svg"} alt="Profile" className="h-5 w-5 rounded-full" />
+                      <Image
+                        src={user.imageUrl || "/placeholder.svg"}
+                        alt="Profile"
+                        width={20}
+                        height={20}
+                        className="rounded-full"
+                      />
                     ) : (
                       <User className="h-5 w-5" />
                     )}
@@ -170,7 +176,7 @@ export default function Header() {
                 </SignInButton>
                 <SignUpButton mode="modal">
                   <Button variant="default" size="sm">
-                    S'inscrire
+                    {"S'inscrire"}
                   </Button>
                 </SignUpButton>
               </div>
@@ -246,7 +252,7 @@ export default function Header() {
                         </SignInButton>
                         <SignUpButton mode="modal">
                           <Button variant="outline" className="w-full">
-                            S'inscrire
+                            {"S'inscrire"}
                           </Button>
                         </SignUpButton>
                       </div>

@@ -1,10 +1,11 @@
 "use client"
 
 import { CardElement } from "@stripe/react-stripe-js"
+import type { StripeCardElementChangeEvent } from "@stripe/stripe-js"
 import { FormLabel } from "../ui/form"
 
 interface PaymentCardProps {
-  onChange?: (event: any) => void
+  onChange?: (event: StripeCardElementChangeEvent) => void
   error?: string
 }
 
@@ -35,9 +36,8 @@ export function PaymentCard({ onChange, error }: PaymentCardProps) {
       </div>
       {error && <p className="text-sm font-medium text-destructive">{error}</p>}
       <div className="text-xs text-muted-foreground mt-2">
-        Paiement sécurisé via Stripe. Nous ne stockons pas vos informations de carte.
+        {"Paiement sécurisé via Stripe. Nous ne stockons pas vos informations de carte."}
       </div>
     </div>
   )
 }
-
