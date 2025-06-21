@@ -7,13 +7,24 @@ import { Badge } from "../../../../components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../../components/ui/select"
 import OrderItemsTable from "../../../../components/admin/order-items-table"
 
-export const metadata = {
-  title: "Détail de commande - Admin ElectroShop",
-  description: "Détails d'une commande",
+interface PageProps {
+  params: { id: string }
 }
 
-export default async function OrderDetailPage({ params }: { params: { id: string } }) {
-  const order = await getOrderById(params.id)
+// Fonction generateMetadata pour des métadonnées dynamiques
+export async function generateMetadata({ params }: PageProps) {
+  const { id } = params
+
+  return {
+    title: `Commande ${id} - Admin OloStore`,
+    description: `Détails de la commande ${id}`,
+  }
+}
+
+export default async function OrderDetailPage({ params }: PageProps) {
+  const { id } = params
+
+  const order = await getOrderById(id)
 
   if (!order) {
     notFound()
@@ -147,4 +158,3 @@ export default async function OrderDetailPage({ params }: { params: { id: string
     </div>
   )
 }
-

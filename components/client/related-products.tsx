@@ -78,7 +78,7 @@ export default function RelatedProducts({ products }: RelatedProductsProps) {
                 className="object-cover transition-transform hover:scale-105 duration-300"
               />
             </Link>
-            {product.discount > 0 && (
+            {typeof product.discount === "number" && product.discount > 0 && (
               <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
                 -{product.discount}%
               </div>

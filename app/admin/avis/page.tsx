@@ -9,13 +9,16 @@ export const metadata = {
   description: "Gérez les avis clients de votre boutique",
 }
 
-export default async function AdminReviewsPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
-  const search = typeof searchParams.search === "string" ? searchParams.search : undefined
-  const status = typeof searchParams.status === "string" ? searchParams.status : undefined
+interface PageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function AdminReviewsPage({ searchParams }: PageProps) {
+  // Attendre les searchParams (nouveau comportement Next.js 15)
+  const params = await searchParams
+  
+  const search = typeof params.search === "string" ? params.search : undefined
+  const status = typeof params.status === "string" ? params.status : undefined
 
   const reviews = await getReviews({ search, status })
 
@@ -45,4 +48,3 @@ export default async function AdminReviewsPage({
     </div>
   )
 }
-
