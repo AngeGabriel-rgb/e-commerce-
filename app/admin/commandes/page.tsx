@@ -3,6 +3,7 @@ import OrdersTable from "../../../components/admin/orders-table"
 import { Input } from "../../../components/ui/input"
 import { Button } from "../../../components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../components/ui/select"
+import { JSX } from "react"
 
 export const metadata = {
   title: "Gestion des commandes - Admin ElectroShop",
@@ -13,7 +14,7 @@ export default async function AdminOrdersPage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
-}) {
+}): Promise<JSX.Element> {
   const search = typeof searchParams.search === "string" ? searchParams.search : undefined
   const status = typeof searchParams.status === "string" ? searchParams.status : undefined
 
@@ -47,4 +48,3 @@ export default async function AdminOrdersPage({
     </div>
   )
 }
-
