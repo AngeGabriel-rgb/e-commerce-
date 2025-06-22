@@ -3,7 +3,7 @@ import OrdersTable from "../../../components/admin/orders-table"
 import { Input } from "../../../components/ui/input"
 import { Button } from "../../../components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../components/ui/select"
-import { JSX } from "react"
+import type { JSX } from "react"
 
 export const metadata = {
   title: "Gestion des commandes - Admin ElectroShop",
@@ -13,10 +13,13 @@ export const metadata = {
 export default async function AdminOrdersPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }): Promise<JSX.Element> {
-  const search = typeof searchParams.search === "string" ? searchParams.search : undefined
-  const status = typeof searchParams.status === "string" ? searchParams.status : undefined
+  // Await the searchParams Promise
+  const resolvedSearchParams = await searchParams
+
+  const search = typeof resolvedSearchParams.search === "string" ? resolvedSearchParams.search : undefined
+  const status = typeof resolvedSearchParams.status === "string" ? resolvedSearchParams.status : undefined
 
   const orders = await getOrders({ search, status })
 
@@ -24,24 +27,21 @@ export default async function AdminOrdersPage({
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Gestion des commandes</h1>
 
-      <div className="flex flex-col md:flex-row gap-4">
-        <div className="flex-1">
-          <Input placeholder="Rechercher une commande..." className="max-w-sm" defaultValue={search || ""} />
-        </div>
-        <Select defaultValue={status || "all"}>
+      <div className="flex gap-4 items-center">
+        <Input placeholder="Rechercher une commande..." defaultValue={search} className="max-w-sm" />
+        <Select defaultValue={status}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Statut" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Tous les statuts</SelectItem>
             <SelectItem value="pending">En attente</SelectItem>
-            <SelectItem value="processing">En traitement</SelectItem>
+            <SelectItem value="processing">En cours</SelectItem>
             <SelectItem value="shipped">Expédiée</SelectItem>
             <SelectItem value="delivered">Livrée</SelectItem>
             <SelectItem value="cancelled">Annulée</SelectItem>
           </SelectContent>
         </Select>
-        <Button variant="outline">Filtrer</Button>
+        <Button type="submit">Filtrer</Button>
       </div>
 
       <OrdersTable orders={orders} />
