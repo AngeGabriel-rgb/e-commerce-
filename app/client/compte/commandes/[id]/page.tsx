@@ -121,15 +121,21 @@ function StatusIcon({ status }: { status: Order["status"] }) {
   }
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params
   return {
-    title: `Commande ${params.id} - ElectroShop`,
+    title: `Commande ${resolvedParams.id} - ElectroShop`,
     description: "Détails de votre commande",
   }
 }
 
-export default async function OrderDetailsPage({ params }: { params: { id: string } }) {
-  const order = await getOrderDetails(params.id)
+export default async function OrderDetailsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const resolvedParams = await params
+  const order = await getOrderDetails(resolvedParams.id)
 
   if (!order) {
     notFound()
