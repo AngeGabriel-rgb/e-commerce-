@@ -1,70 +1,66 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { Card } from "../ui/card"
 import { Laptop, Smartphone, Tablet, Headphones, Tv, Gamepad, Home } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
-const categories = [
-  {
-    id: "smartphones",
-    name: "Smartphones",
-    icon: Smartphone,
-    image: "/images/categories/smartphones.png",
-    productCount: 12,
-  },
-  {
-    id: "ordinateurs",
-    name: "Ordinateurs Portables",
-    icon: Laptop,
-    image: "/images/categories/computers.png",
-    productCount: 8,
-  },
-  {
-    id: "tablettes",
-    name: "Tablettes",
-    icon: Tablet,
-    image: "/images/categories/tablets.png",
-    productCount: 6,
-  },
-  {
-    id: "accessoires",
-    name: "Accessoires",
-    icon: Headphones,
-    image: "/images/categories/accessories.png",
-    productCount: 24,
-  },
-  {
-    id: "audio",
-    name: "Audio",
-    icon: Headphones,
-    image: "/images/categories/audio.png",
-    productCount: 15,
-  },
-  {
-    id: "televiseurs",
-    name: "Téléviseurs",
-    icon: Tv,
-    image: "/images/tvs.png",
-    productCount: 10,
-  },
-  {
-    id: "gaming",
-    name: "Gaming",
-    icon: Gamepad,
-    image: "/images/categories/gaming.png",
-    productCount: 18,
-  },
-  {
-    id: "maison-connectee",
-    name: "Maison Connectée",
-    icon: Home,
-    image: "/images/categories/home.png",
-    productCount: 14,
-  },
-]
+interface Category {
+  id: string
+  name: string
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
+  image: string
+  productCount: number
+}
 
 export default function CategoryList() {
+  const [categories, setCategories] = useState<Category[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        // Dans une application réelle, vous feriez un appel API ici
+        // const response = await fetch('/api/categories')
+        // const data = await response.json()
+        // setCategories(data)
+        
+        // Simuler un délai de chargement
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        
+        setIsLoading(false)
+      } catch (error) {
+        console.error("Erreur lors du chargement des catégories:", error)
+        setIsLoading(false)
+      }
+    }
+
+    fetchCategories()
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+          <div key={i} className="animate-pulse">
+            <Card className="overflow-hidden">
+              <div className="h-40 bg-muted"></div>
+            </Card>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  if (categories.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-muted-foreground">Aucune catégorie disponible pour le moment.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {categories.map((category) => (
@@ -94,4 +90,3 @@ export default function CategoryList() {
     </div>
   )
 }
-

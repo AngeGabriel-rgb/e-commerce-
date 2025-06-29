@@ -20,39 +20,8 @@ export default function CategoryShowcase() {
         // Dans une application réelle, vous feriez un appel API ici
         // const response = await fetch('/api/categories/featured')
         // const data = await response.json()
+        // setCategories(data)
 
-        // Pour l'exemple, nous utilisons des données simulées
-        const mockCategories: Category[] = [
-          {
-            id: "smartphones",
-            name: "Smartphones",
-            description: "Téléphones intelligents de dernière génération",
-            image: "/images/categories/smartphones.png?height=300&width=300&text=Smartphones",
-            productCount: 12,
-            createdAt: new Date("2023-01-01"),
-            updatedAt: new Date("2023-01-01"),
-          },
-          {
-            id: "laptops",
-            name: "Ordinateurs Portables",
-            description: "Ordinateurs portables pour tous les besoins",
-            image: "/images/categories/computers.png?height=300&width=300&text=Laptops",
-            productCount: 8,
-            createdAt: new Date("2023-01-01"),
-            updatedAt: new Date("2023-01-01"),
-          },
-          {
-            id: "accessories",
-            name: "Accessoires",
-            description: "Accessoires pour vos appareils électroniques",
-            image: "/images/categories/accessories.png?height=300&width=300&text=Accessoires",
-            productCount: 24,
-            createdAt: new Date("2023-01-01"),
-            updatedAt: new Date("2023-01-01"),
-          },
-        ]
-
-        setCategories(mockCategories)
         setIsLoading(false)
       } catch (error) {
         console.error("Erreur lors du chargement des catégories:", error)
@@ -86,7 +55,7 @@ export default function CategoryShowcase() {
               </div>
             ))}
           </div>
-        ) : (
+        ) : categories.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {categories.map((category) => (
               <Link key={category.id} href={`/client/produits?category=${category.id}`}>
@@ -108,6 +77,10 @@ export default function CategoryShowcase() {
               </Link>
             ))}
           </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">Aucune catégorie disponible pour le moment.</p>
+          </div>
         )}
 
         <div className="text-center mt-10">
@@ -119,4 +92,3 @@ export default function CategoryShowcase() {
     </section>
   )
 }
-

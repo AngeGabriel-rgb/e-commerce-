@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "../ui/button"
-import { Bell, Search, Menu } from "lucide-react"
+import { Bell, Search, LogOut } from "lucide-react"
 import { Input } from "../ui/input"
 import { ThemeToggle } from "../theme-toggle"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
@@ -14,27 +14,23 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import Link from "next/link"
+import { useUser, SignOutButton } from "@clerk/nextjs"
+import MobileSidebar from "./mobile-sidebar"
 
-interface AdminHeaderProps {
-  user: {
-    name?: string | null
-    email?: string | null
-    image?: string | null
-  }
-}
+export default function AdminHeader() {
+  const { user } = useUser()
 
-export default function AdminHeader({ user }: AdminHeaderProps) {
+  if (!user) return null
+
   return (
     <header className="sticky top-0 z-10 h-16 border-b bg-background flex items-center px-4 md:px-6">
       <div className="flex items-center gap-4 md:hidden">
-        <Button variant="outline" size="icon" className="shrink-0">
-          <Menu className="h-5 w-5" />
-          <span className="sr-only">Toggle menu</span>
-        </Button>
+        <MobileSidebar />
         <Link href="/admin" className="font-semibold">
           OloStore Admin
         </Link>
       </div>
+
       <div className="hidden md:flex md:flex-1 md:items-center md:gap-4 md:px-6">
         <form className="flex-1 ml-auto mr-4">
           <div className="relative">
@@ -46,26 +42,31 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
             />
           </div>
         </form>
+
         <ThemeToggle />
-        <Button variant="outline" size="icon" className="relative">
+
+        <Button variant="outline" size="icon" className="relative bg-transparent">
           <Bell className="h-5 w-5" />
           <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-600" />
           <span className="sr-only">Notifications</span>
         </Button>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-8 w-8 rounded-full">
               <Avatar className="h-8 w-8">
-                <AvatarImage src={user.image || ""} alt={user.name || ""} />
-                <AvatarFallback>{user.name?.charAt(0) || "U"}</AvatarFallback>
+                <AvatarImage src={user.imageUrl || "/placeholder.svg"} alt={user.fullName || ""} />
+                <AvatarFallback>
+                  {user.firstName?.charAt(0) || user.emailAddresses[0]?.emailAddress.charAt(0) || "U"}
+                </AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">{user.name}</p>
-                <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                <p className="text-sm font-medium leading-none">{user.fullName || user.firstName || "Utilisateur"}</p>
+                <p className="text-xs leading-none text-muted-foreground">{user.emailAddresses[0]?.emailAddress}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -77,7 +78,12 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href="/client">Retour à la boutique</Link>
+              <SignOutButton redirectUrl="/admin/sign-in">
+                <button className="flex w-full items-center gap-2">
+                  <LogOut className="h-4 w-4" />
+                  Se déconnecter
+                </button>
+              </SignOutButton>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -85,4 +91,3 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
     </header>
   )
 }
-

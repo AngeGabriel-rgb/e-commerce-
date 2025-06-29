@@ -47,4 +47,15 @@ export default async function AdminReviewsPage({ searchParams }: PageProps) {
       <ReviewsTable reviews={reviews} />
     </div>
   )
+
+
+
+
+
+
+
+
+
+
+  
 }

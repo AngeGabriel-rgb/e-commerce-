@@ -6,17 +6,19 @@ import Link from "next/link"
 import { Input } from "../../../components/ui/input"
 
 export const metadata = {
-  title: "Gestion des produits - Admin ElectroShop",
+  title: "Gestion des produits - Admin OloStore",
   description: "Gérez les produits de votre boutique",
 }
 
 export default async function AdminProductsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-  const search = typeof searchParams.search === "string" ? searchParams.search : undefined
-  const category = typeof searchParams.category === "string" ? searchParams.category : undefined
+  // Await searchParams before accessing its properties
+  const resolvedSearchParams = await searchParams
+  const search = typeof resolvedSearchParams.search === "string" ? resolvedSearchParams.search : undefined
+  const category = typeof resolvedSearchParams.category === "string" ? resolvedSearchParams.category : undefined
 
   const products = await getProducts({ search, category })
 
@@ -43,4 +45,3 @@ export default async function AdminProductsPage({
     </div>
   )
 }
-

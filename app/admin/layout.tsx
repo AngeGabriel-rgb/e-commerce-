@@ -1,29 +1,27 @@
 import type React from "react"
-import AdminHeader from "../../components/admin/admin-header"
-import AdminSidebar from "../../components/admin/admin-sidebar"
+import { auth } from "@clerk/nextjs/server"
+import { redirect } from "next/navigation"
+import AdminHeader from "@/components/admin/admin-header"
+import AdminSidebar from "@/components/admin/admin-sidebar"
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  // Créer un utilisateur admin par défaut sans authentification
-  const user = {
-    id: "admin-id",
-    name: "Admin Test",
-    email: "admin@example.com",
-    image: null,
-    role: "admin",
+  const { userId } = await auth()
+
+  if (!userId) {
+    redirect("/admin")
   }
 
   return (
-    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="flex min-h-screen bg-background">
       <AdminSidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <AdminHeader user={user} />
-        <main className="flex-1 overflow-y-auto p-4">{children}</main>
+      <div className="flex-1 flex flex-col">
+        <AdminHeader />
+        <main className="flex-1 p-6">{children}</main>
       </div>
     </div>
   )
 }
-

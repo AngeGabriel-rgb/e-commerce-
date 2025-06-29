@@ -19,62 +19,8 @@ export default function FeaturedProducts() {
         // Dans une application réelle, vous feriez un appel API ici
         // const response = await fetch('/api/products/featured')
         // const data = await response.json()
+        // setProducts(data)
 
-        // Pour l'exemple, nous utilisons des données simulées
-        const mockProducts: Product[] = [
-          {
-            id: "1",
-            name: "Smartphone XYZ Pro",
-            description: "Le dernier smartphone avec un appareil photo exceptionnel et une batterie longue durée.",
-            price: 899.99,
-            oldPrice: 999.99,
-            discount: 10,
-            image: "/images/products/tel.png?height=300&width=300",
-            category: "smartphones",
-            inStock: true,
-            rating: 4.7,
-            reviewCount: 124,
-          },
-          {
-            id: "2",
-            name: "Ordinateur Portable UltraBook",
-            description: "Ordinateur portable fin et léger avec une puissance exceptionnelle pour les professionnels.",
-            price: 1299.99,
-            discount: 0,
-            image: "/images/products/pc.png?height=300&width=300",
-            category: "laptops",
-            inStock: true,
-            rating: 4.9,
-            reviewCount: 86,
-          },
-          {
-            id: "3",
-            name: "Tablette MediaPad",
-            description: "Tablette polyvalente avec un écran haute résolution et une grande autonomie.",
-            price: 349.99,
-            oldPrice: 399.99,
-            discount: 12,
-            image: "/images/products/tab.png?height=300&width=300",
-            category: "tablets",
-            inStock: true,
-            rating: 4.5,
-            reviewCount: 93,
-          },
-          {
-            id: "4",
-            name: "Écouteurs Sans Fil Pro",
-            description: "Écouteurs sans fil avec réduction de bruit active et qualité sonore exceptionnelle.",
-            price: 149.99,
-            discount: 0,
-            image: "/images/products/ecout.png?height=300&width=300",
-            category: "accessories",
-            inStock: true,
-            rating: 4.8,
-            reviewCount: 203,
-          },
-        ]
-
-        setProducts(mockProducts)
         setIsLoading(false)
       } catch (error) {
         console.error("Erreur lors du chargement des produits:", error)
@@ -108,15 +54,18 @@ export default function FeaturedProducts() {
               </div>
             ))}
           </div>
-        ) : (
+        ) : products.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">Aucun produit populaire disponible pour le moment.</p>
           </div>
         )}
       </div>
     </section>
   )
 }
-

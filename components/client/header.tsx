@@ -216,12 +216,7 @@ export default function Header() {
                   >
                     Promotions
                   </Link>
-                  <Link
-                    href="/client/contact"
-                    className={`nav-link text-lg font-medium ${pathname.startsWith("/client/contact") ? "text-primary" : ""}`}
-                  >
-                    Contact
-                  </Link>
+              
 
                   {/* User Account Section - Mobile */}
                   <div className="border-t my-4 pt-4">

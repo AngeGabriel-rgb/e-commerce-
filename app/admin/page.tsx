@@ -1,12 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
-import { getOrderStats, getRecentOrders } from "../../lib/services/order-service"
-import { getUserStats } from "../../lib/services/user-service"
-import { getProductStats } from "../../lib/services/product-service"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { getOrderStats, getRecentOrders } from "@/lib/services/order-service"
+import { getUserStats } from "@/lib/services/user-service"
+import { getProductStats } from "@/lib/services/product-service"
 import { DollarSign, Users, Package, ShoppingCart } from "lucide-react"
-import RecentOrdersTable from "../../components/admin/recent-orders-table"
+import RecentOrdersTable from "@/components/admin/recent-orders-table"
 
 export const metadata = {
-  title: "Dashboard - Admin ElectroShop",
+  title: "Dashboard - Admin OloStore",
   description: "Tableau de bord administrateur",
 }
 
@@ -116,4 +116,3 @@ export default async function AdminDashboardPage() {
     </div>
   )
 }
-

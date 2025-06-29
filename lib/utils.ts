@@ -16,7 +16,7 @@ export function formatDate(date: Date | string): string {
 export function formatPrice(price: number): string {
   return new Intl.NumberFormat("fr-FR", {
     style: "currency",
-    currency: "EUR",
+    currency: "XAF", // Code ISO pour le Franc CFA (FCFA)
   }).format(price)
 }
 
@@ -49,4 +49,3 @@ export function generatePagination(currentPage: number, totalPages: number) {
   // another ellipsis, and the last page.
   return [1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages]
 }
-

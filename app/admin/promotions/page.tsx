@@ -6,17 +6,19 @@ import Link from "next/link"
 import { Input } from "../../../components/ui/input"
 
 export const metadata = {
-  title: "Gestion des promotions - Admin ElectroShop",
+  title: "Gestion des promotions - Admin OloStore",
   description: "Gérez les promotions de votre boutique",
 }
 
 export default async function AdminPromotionsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-  const search = typeof searchParams.search === "string" ? searchParams.search : undefined
-  const status = typeof searchParams.status === "string" ? searchParams.status : undefined
+  // Await searchParams before accessing its properties
+  const resolvedSearchParams = await searchParams
+  const search = typeof resolvedSearchParams.search === "string" ? resolvedSearchParams.search : undefined
+  const status = typeof resolvedSearchParams.status === "string" ? resolvedSearchParams.status : undefined
 
   const promotions = await getPromotions({ search, status })
 
@@ -43,4 +45,3 @@ export default async function AdminPromotionsPage({
     </div>
   )
 }
-
