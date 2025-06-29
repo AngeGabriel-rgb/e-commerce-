@@ -1,5 +1,5 @@
 export const siteConfig = {
-    name: "ElectroShop",
+    name: "Olostore",
     description: "Votre boutique d'électronique en ligne",
     url: "https://electroshop.vercel.app",
     ogImage: "https://electroshop.vercel.app/og.jpg",

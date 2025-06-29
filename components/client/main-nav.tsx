@@ -40,11 +40,6 @@ export default function MainNav({ items }: MainNavProps) {
       href: "/client/promotions",
       description: "Nos offres spéciales",
     },
-    {
-      title: "Contact",
-      href: "/client/contact",
-      description: "Nous contacter",
-    },
   ]
 
   const navItems = items?.length ? items : defaultItems

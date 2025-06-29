@@ -6,18 +6,75 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ShoppingBag, Heart, MapPin, Bell, ArrowRight } from "lucide-react"
 
-// Simuler un utilisateur connecté
-const mockUser = {
-  name: "ange test",
-  email: "test@example.com",
-  orders: 5,
-  wishlist: 12,
-  addresses: 2,
-  notifications: 3,
+interface User {
+  name: string
+  email: string
+  orders: number
+  wishlist: number
+  addresses: number
+  notifications: number
 }
 
 export function AccountOverview() {
-  const [user] = useState(mockUser)
+  const [user, setUser] = useState<User | null>(null)
+
+  // À remplacer par un appel API réel pour récupérer les données utilisateur
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await fetch('/api/user/profile')
+  //       const userData = await response.json()
+  //       setUser(userData)
+  //     } catch (error) {
+  //       console.error('Erreur lors de la récupération des données utilisateur:', error)
+  //     }
+  //   }
+  //   fetchUserData()
+  // }, [])
+
+  if (!user) {
+    return (
+      <div className="space-y-6">
+        <Card>
+          <CardHeader>
+            <div className="animate-pulse">
+              <div className="h-6 bg-muted rounded w-1/3 mb-2"></div>
+              <div className="h-4 bg-muted rounded w-1/2"></div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="animate-pulse">
+              <div className="h-4 bg-muted rounded w-full mb-2"></div>
+              <div className="h-4 bg-muted rounded w-3/4"></div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <Card key={i}>
+              <CardHeader className="pb-2">
+                <div className="animate-pulse">
+                  <div className="h-5 bg-muted rounded w-1/2"></div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="animate-pulse">
+                  <div className="h-8 bg-muted rounded w-1/4 mb-2"></div>
+                  <div className="h-4 bg-muted rounded w-1/3"></div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <div className="animate-pulse w-full">
+                  <div className="h-9 bg-muted rounded"></div>
+                </div>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
